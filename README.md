@@ -17,7 +17,8 @@ app = FrankDux()
 @app.register(str, str) # arguments, first and last name
 @app.returns(User)
 def create_user(user):
-    pass
+    # do stuff here, return the capn proto generated User
+    return user
 
 app.run(port=8888)
 ```
