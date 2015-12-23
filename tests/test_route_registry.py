@@ -12,7 +12,7 @@ def app():
     def test_func():
         pass
 
-def test_basic_registration():
+def test_basic_registration(app):
     pass
 
 
