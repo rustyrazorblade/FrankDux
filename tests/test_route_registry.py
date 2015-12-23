@@ -11,6 +11,8 @@ def app():
     @app.register()
     def test_func():
         pass
+    
+    return app
 
 def test_basic_registration(app):
     pass
