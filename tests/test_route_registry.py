@@ -12,6 +12,10 @@ def app():
     def test_func():
         pass
 
+    @frank.register(str, int)
+    def test_args():
+        pass
+
     return frank
 
 def test_basic_registration(app):
