@@ -6,13 +6,13 @@ from pytest import fixture
 
 @fixture
 def app():
-    app = FrankDux()
+    frank = FrankDux()
 
-    @app.register()
+    @frank.register()
     def test_func():
         pass
-    
-    return app
+
+    return frank
 
 def test_basic_registration(app):
     pass
