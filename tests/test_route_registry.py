@@ -13,7 +13,7 @@ def app():
         pass
 
     @frank.register(str, int)
-    def test_args():
+    def test_args(name, age):
         pass
 
     return frank
