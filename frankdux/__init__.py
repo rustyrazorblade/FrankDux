@@ -6,7 +6,7 @@ import logging
 
 class Function(object):
     name = None
-    args = None
+    args = None # dict of key=type pairs
     return_type = None
 
     def __init__(self, name, args, return_type):
