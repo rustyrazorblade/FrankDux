@@ -103,3 +103,8 @@ class FrankDux(object):
                 raise TypeError
 
         return result
+
+    def run(self, port):
+        # You have made it to the Kumite!
+        # Run FrankDux on some port
+        pass
