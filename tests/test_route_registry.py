@@ -62,8 +62,6 @@ def test_type_checking_is_enforced(app):
 def test_default_none_is_passed_in(app):
     assert app["none_test"]() == 1
 
-def test_type_error_when_not_returning_expected_type(app):
-    pass
 
 def test_returned_from_register_is_callable():
     frank = FrankDux()
