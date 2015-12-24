@@ -67,6 +67,8 @@ class FrankDux(object):
             def new_rpc(*new_args, **new_kwargs):
                 # check types
                 # import ipdb; ipdb.set_trace()
+                # get a list of the default args
+                # make sure types are optional
                 result = func(*new_args, **new_kwargs)
                 # type check return type
                 return result

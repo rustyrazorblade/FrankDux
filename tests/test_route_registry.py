@@ -20,6 +20,11 @@ def app():
     def is_greater_than_five(i):
         return i > 5
 
+    @frank.register(int, returns=int)
+    def none_test(i):
+        return 1 if i is None else 0
+
+
     return frank
 
 def test_basic_registration_func_exists(app):
@@ -51,6 +56,9 @@ def test_type_checking_is_enforced(app):
 
 
 def test_default_none_is_passed_in(app):
+    assert app["none_test"]() == 1
+
+def test_type_error_when_not_returning_expected_type(app):
     pass
 
 def test_returned_from_register_is_callable():
