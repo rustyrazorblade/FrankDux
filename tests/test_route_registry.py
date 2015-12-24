@@ -45,4 +45,21 @@ def test_funcs_can_be_called(app):
     f = app["is_greater_than_five"]
     assert f(i=10)
 
+def test_type_checking_is_enforced(app):
+    pass
+
+
+def test_default_none_is_passed_in(app):
+    pass
+
+def test_returned_from_register_is_callable():
+    frank = FrankDux()
+
+    @frank.register(int, returns=int)
+    def test_func(i):
+        return i
+
+    assert(test_func(i=1) == 1)
+
+
 
