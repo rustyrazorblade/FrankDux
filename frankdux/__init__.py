@@ -1,17 +1,18 @@
 from collections import namedtuple
-
+from functools import wraps
 import logging
 
 # Function = namedtuple("Function", ["args", "return_type"], verbose=True)
 
 class Function(object):
     name = None
-    args = None # dict of key=type pairs
+    types = None # dict of key=type pairs
     return_type = None
+    func = None
 
-    def __init__(self, name, args, return_type):
+    def __init__(self, name, types, return_type, func):
         self.name = name
-        self.args = args
+        self.types = types
         # make sure this is list of dicts
         self.return_type = return_type
 
@@ -59,10 +60,22 @@ class FrankDux(object):
 
             zipped = dict(zip(func.func_code.co_varnames, args))
 
-            f = Function(name=name, args=zipped, return_type=returns)
+            # create new function (functools.wraps)
+            # check types when called
+            @wraps(func)
+            def new_rpc(*new_args, **new_kwargs):
+                result = func(*new_args, **new_kwargs)
+                # type check return type
+                return result
+
+            f = Function(name=name, types=zipped,
+                         return_type=returns, func=new_rpc)
+
             self.registry[name] = f
             print "Created func:", func, args, kwargs
-            return func
+
+
+            return new_rpc
 
         return new_func
 
