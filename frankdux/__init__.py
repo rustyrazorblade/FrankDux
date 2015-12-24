@@ -2,7 +2,6 @@ from collections import namedtuple
 from functools import wraps
 import logging
 
-# Function = namedtuple("Function", ["args", "return_type"], verbose=True)
 
 class Function(object):
     name = None
@@ -96,7 +95,7 @@ class FrankDux(object):
         :return: key:value, type checked
         """
         result = {}
-        for k,v in typemap.iteritems():
+        for k, v in typemap.iteritems():
             tmp = kwargs.get(k, None)
             if tmp is None or isinstance(tmp, v):
                 result[k] = tmp
