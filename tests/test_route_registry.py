@@ -23,6 +23,10 @@ def app():
     return frank
 
 def test_basic_registration(app):
-    pass
+
+    # each of the calls should be available in the registry
+
+    # I should be able to call the functions in the app directly
+    assert app.is_greater_than_five(10)
 
 

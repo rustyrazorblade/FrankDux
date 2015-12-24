@@ -1,12 +1,12 @@
 from collections import namedtuple
 
-
+Function = namedtuple("Function", "args", "return_type")
 
 class FrankDux(object):
-    reg = None
+    registry = None
 
     def __init__(self):
-        self.reg = {}
+        self.registry = {}
 
     def register(self, *args, **kwargs):
         """
