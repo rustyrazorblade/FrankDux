@@ -21,17 +21,11 @@ class MessageEncoder(object):
         """
         self.schema = schema
 
+    def encode(self):
+        raise NotImplementedError()
 
-class MessageDecoder(object):
-    schema = None  # k/v pairs of name:type
-    def __init__(self, schema):
-        """
-        :param typemap: dict of name:type pairs
-        :return:
-        """
-        self.schema = schema
-    pass
-
+    def decode(self):
+        raise NotImplementedError()
 
 
 class TypeRegistry(object):

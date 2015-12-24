@@ -1,7 +1,7 @@
 from collections import namedtuple
 from functools import wraps
 import logging
-
+from encoding import MessageEncoder
 
 class Function(object):
     name = None
@@ -109,3 +109,7 @@ class FrankDux(object):
         # Run FrankDux on some port
         pass
 
+
+    def decode_request(self, data):
+        pass
+    

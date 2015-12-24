@@ -1,7 +1,7 @@
 from frankdux import FrankDux
 from pytest import fixture, raises
 
-from frankdux.encoding import TypeRegistry, MessageDecoder, MessageEncoder
+from frankdux.encoding import TypeRegistry, MessageEncoder
 
 
 @fixture
