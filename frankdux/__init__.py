@@ -31,6 +31,7 @@ class FrankDux(object):
 
         # i
         def new_func(*args, **kwargs):
+            print "Created func:", args, kwargs
             return None
 
         return new_func
