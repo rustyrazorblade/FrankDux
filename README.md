@@ -14,11 +14,10 @@ from frankdux import FrankDux
 
 app = FrankDux()
 
-@app.register(str, str) # arguments, first and last name
-@app.returns(User)
+@app.register(str, str, returns=int) # arguments, first and last name
 def create_user(user):
-    # do stuff here, return the capn proto generated User
-    return user
+    # do stuff here, return the id of the new user
+    return user_id
 
 app.run(port=8888)
 ```
