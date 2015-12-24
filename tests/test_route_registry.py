@@ -76,5 +76,10 @@ def test_returned_from_register_is_callable():
 
 
 def test_validate_args(typemap):
-    pass
+    frank = FrankDux()
+    result = frank.validate_args(typemap, {"i":1})
+    assert result["i"] == 1
+
+    result = frank.validate_args(typemap, {})
+    assert result["i"] is None
 

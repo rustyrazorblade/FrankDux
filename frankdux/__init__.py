@@ -99,4 +99,5 @@ class FrankDux(object):
         :param kwargs:
         :return:
         """
-        pass
+        result = {}
+        return result
