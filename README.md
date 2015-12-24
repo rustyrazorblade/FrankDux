@@ -37,3 +37,7 @@ rpc = myserverpackage.RPC("localhost:8888")
 
 user = rpc.create_user("jon", "haddad") # returns a capn proto object
 ```
+
+### Notes:
+
+Object types must be unique across namespaces.  That is, you cannot have a User type as an argument from different capn proto files.
