@@ -10,13 +10,17 @@ class FrankDux(object):
 
     def register(self, *args, **kwargs):
         """
+        Registers a function to be available for RPC
+        Specify arguments followed by return type
+
         Usage:
 
         # how to set default values?
 
-        @app.register(str, int)
-        def my_stuff(a, b):
-            pass
+        @app.register(int, returns=bool)
+        def greater_than_zero(a):
+            return a > 0
+
 
         :param args:
         :return:
