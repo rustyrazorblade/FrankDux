@@ -15,4 +15,24 @@ class CodeGen(object):
     """
     schema = None
     def __init__(self, frank_instance, cap_schema):
-        schema = load(cap_schema)
+        #schema = load(cap_schema)
+        pass
+
+    def write(self, fp):
+        """
+        writes the full schema to the file handle
+        :param fp:
+        :return:
+        """
+        pass
+
+    def generate_rpc_schema(self, typemap):
+        """
+
+        :param typemap: dict of key/type pairs
+        :return: str - capn proto compliant struct string
+        """
+        # u.schema.node.displayName.split(":")[1]
+        result = "struct {}"
+        pass
+
