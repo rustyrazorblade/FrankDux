@@ -31,6 +31,7 @@ def app():
 def typemap():
     return {"i":int}
 
+
 def test_basic_registration_func_exists(app):
 
     # each of the calls should be available in the registry
@@ -41,18 +42,19 @@ def test_basic_registration_func_exists(app):
     assert "test_args" in app.registry
     assert "is_greater_than_five" in app.registry
 
+
 def test_func_args_are_set_properly(app):
 
     f = app["is_greater_than_five"]
     # does the registry have the proper args set up?
     assert "i" in f.types
     assert f.types["i"] == int
-    # expecting "i=int"
-    # return type?
+
 
 def test_funcs_can_be_called(app):
     f = app["is_greater_than_five"]
     assert f(i=10)
+
 
 def test_type_checking_is_enforced(app):
     with raises(TypeError):
@@ -75,12 +77,12 @@ def test_returned_from_register_is_callable():
 
 def test_validate_args(typemap):
     frank = FrankDux()
-    result = frank.validate_args(typemap, {"i":1})
+    result = frank.validate_args(typemap, {"i": 1})
     assert result["i"] == 1
 
     result = frank.validate_args(typemap, {})
     assert result["i"] is None
 
     with raises(TypeError):
-        frank.validate_args(typemap, {"i":"happy birthday"})
+        frank.validate_args(typemap, {"i": "happy birthday"})
 

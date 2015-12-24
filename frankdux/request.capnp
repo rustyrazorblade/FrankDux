@@ -9,3 +9,4 @@ struct Request {
     func @0 : Text;
     arguments @1 : List(Argument);
 }
+
