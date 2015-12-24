@@ -15,9 +15,10 @@ class Function(object):
         self.types = types
         # make sure this is list of dicts
         self.return_type = return_type
+        self.func = func
 
     def __call__(self, **kwargs):
-        pass
+        return self.func(**kwargs)
 
 
 class FrankDux(object):
