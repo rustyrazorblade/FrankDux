@@ -68,7 +68,7 @@ class FrankDux(object):
                 # make sure types are optional
 
                 arguments = self.validate_args(zipped, new_kwargs)
-                result = func(*new_args, **new_kwargs)
+                result = func(**arguments)
                 # type check return type
                 return result
 
@@ -100,4 +100,11 @@ class FrankDux(object):
         :return:
         """
         result = {}
+        for k,v in typemap.iteritems():
+            tmp = kwargs.get(k, None)
+            if tmp is None or isinstance(tmp, v):
+                result[k] = tmp
+            else:
+                raise TypeError
+
         return result
