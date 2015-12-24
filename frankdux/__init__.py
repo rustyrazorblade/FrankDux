@@ -12,6 +12,7 @@ class Function(object):
     def __init__(self, name, args, return_type):
         self.name = name
         self.args = args
+        # make sure this is list of dicts
         self.return_type = return_type
 
     def __call__(self, *args, **kwargs):
@@ -41,10 +42,10 @@ class FrankDux(object):
         :param args:
         :return:
         """
-        # logging.debug("Registering function with args:")
-        # print self
-        # print args
-        # print kwargs
+        logging.debug("Registering function with args:")
+        print self
+        print args
+        print kwargs
 
         # i
         # import ipdb; ipdb.set_trace()
@@ -55,7 +56,10 @@ class FrankDux(object):
             name = func.func_name
             # pull out the arg types & match to the names
             # import ipdb; ipdb.set_trace()
-            f = Function(name=name, args=args, return_type=returns)
+
+            zipped = dict(zip(func.func_code.co_varnames, args))
+
+            f = Function(name=name, args=zipped, return_type=returns)
             self.registry[name] = f
             print "Created func:", func, args, kwargs
             return func

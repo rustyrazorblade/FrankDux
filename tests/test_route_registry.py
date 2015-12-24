@@ -32,10 +32,12 @@ def test_basic_registration(app):
     assert "test_args" in app.registry
     assert "is_greater_than_five" in app.registry
 
-    # does the registry have the proper args set up?
-    # expecting "i=int"
-
     f = app["is_greater_than_five"]
+    # does the registry have the proper args set up?
+    assert "i" in f.args
+    assert f.args["i"] == int
+    # expecting "i=int"
+    # return type?
 
     assert f(i=10)
 
