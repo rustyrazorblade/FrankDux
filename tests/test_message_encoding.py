@@ -1,7 +1,8 @@
 from frankdux import FrankDux
 from pytest import fixture, raises
 
-from frankdux.encoding import TypeRegistry
+from frankdux.encoding import TypeRegistry, MessageDecoder, MessageEncoder
+
 
 @fixture
 def registry():
@@ -9,7 +10,19 @@ def registry():
 
     return t
 
+@fixture
+def schema():
+    return {"i": int,
+            "s": str}
 
-# def test_int(registry):
-#     t.
+@fixture
+def encoder():
+    encoder = MessageEncoder(schema())
+    return encoder
+
+def test_high_level_encoding_and_decoding(encoder):
+
+    data = {"i": 5}
+    encoded = encoder.encode()
+    original = encoder.decode(data)
 
