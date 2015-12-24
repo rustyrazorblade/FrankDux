@@ -37,7 +37,7 @@ def test_func_args_are_set_properly(app):
     f = app["is_greater_than_five"]
     # does the registry have the proper args set up?
     assert "i" in f.types
-    assert f.args["i"] == int
+    assert f.types["i"] == int
     # expecting "i=int"
     # return type?
 
