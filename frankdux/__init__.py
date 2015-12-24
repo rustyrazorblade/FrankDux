@@ -45,9 +45,6 @@ class FrankDux(object):
         :return:
         """
         logging.debug("Registering function with args:")
-        print self
-        print args
-        print kwargs
 
         # i
         # import ipdb; ipdb.set_trace()
@@ -57,9 +54,9 @@ class FrankDux(object):
             returns = kwargs.get("returns", None)
             name = func.func_name
             # pull out the arg types & match to the names
-            # import ipdb; ipdb.set_trace()
 
             zipped = dict(zip(func.func_code.co_varnames, args))
+            # import ipdb; ipdb.set_trace()
 
             # create new function (functools.wraps)
             # check types when called
@@ -69,6 +66,8 @@ class FrankDux(object):
                 # import ipdb; ipdb.set_trace()
                 # get a list of the default args
                 # make sure types are optional
+
+                arguments = self.validate_args(zipped, new_kwargs)
                 result = func(*new_args, **new_kwargs)
                 # type check return type
                 return result
@@ -90,3 +89,14 @@ class FrankDux(object):
     def __getitem__(self, item):
         return self.registry[item]
 
+
+    def validate_args(self, typemap, kwargs):
+        """
+        checks each of the elements in kwargs
+        returns a dictionary of k/v pairs
+        sets None as default for all keys that aren't set explicitly
+        :param typemap:
+        :param kwargs:
+        :return:
+        """
+        pass
