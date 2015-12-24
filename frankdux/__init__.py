@@ -56,14 +56,10 @@ class FrankDux(object):
             # pull out the arg types & match to the names
 
             zipped = dict(zip(func.func_code.co_varnames, args))
-            # import ipdb; ipdb.set_trace()
 
-            # create new function (functools.wraps)
-            # check types when called
             @wraps(func)
             def new_rpc(*new_args, **new_kwargs):
                 # check types
-                # import ipdb; ipdb.set_trace()
                 # get a list of the default args
                 # make sure types are optional
 
@@ -95,9 +91,9 @@ class FrankDux(object):
         checks each of the elements in kwargs
         returns a dictionary of k/v pairs
         sets None as default for all keys that aren't set explicitly
-        :param typemap:
-        :param kwargs:
-        :return:
+        :param typemap: dict of key:type
+        :param kwargs: dict of key:value
+        :return: key:value, type checked
         """
         result = {}
         for k,v in typemap.iteritems():

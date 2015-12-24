@@ -1,6 +1,3 @@
-import sys
-print sys.path
-
 from frankdux import FrankDux
 from pytest import fixture, raises
 
