@@ -38,8 +38,10 @@ class FrankDux(object):
             f = Function(args=args, return_type=returns)
             self.registry[name] = f
             print "Created func:", func, args, kwargs
-            return None
+            return func
 
         return new_func
 
+    def call(self, func, **kwargs):
+        pass
 

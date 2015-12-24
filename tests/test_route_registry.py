@@ -32,4 +32,5 @@ def test_basic_registration(app):
     assert "test_args" in app.registry
     assert "is_greater_than_five" in app.registry
 
+    assert app.call("is_greater_than_five", i=10)
 
