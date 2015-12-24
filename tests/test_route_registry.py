@@ -2,7 +2,7 @@ import sys
 print sys.path
 
 from frankdux import FrankDux
-from pytest import fixture
+from pytest import fixture, raises
 
 @fixture
 def app():
@@ -46,7 +46,8 @@ def test_funcs_can_be_called(app):
     assert f(i=10)
 
 def test_type_checking_is_enforced(app):
-    pass
+    with raises(TypeError):
+        app["is_greater_than_five"](i="bacon")
 
 
 def test_default_none_is_passed_in(app):
