@@ -28,6 +28,8 @@ def test_basic_registration(app):
 
     # I should be able to call the functions in the app directly
     # assert app.is_greater_than_five(10)
+    assert "test_func" in app.registry
+    assert "test_args" in app.registry
     assert "is_greater_than_five" in app.registry
 
 
