@@ -15,7 +15,7 @@ class Function(object):
         # make sure this is list of dicts
         self.return_type = return_type
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, **kwargs):
         pass
 
 
