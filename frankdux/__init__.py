@@ -2,7 +2,21 @@ from collections import namedtuple
 
 import logging
 
-Function = namedtuple("Function", ["args", "return_type"], verbose=True)
+# Function = namedtuple("Function", ["args", "return_type"], verbose=True)
+
+class Function(object):
+    name = None
+    args = None
+    return_type = None
+
+    def __init__(self, name, args, return_type):
+        self.name = name
+        self.args = args
+        self.return_type = return_type
+
+    def __call__(self, *args, **kwargs):
+        pass
+
 
 class FrankDux(object):
     registry = None
@@ -41,7 +55,7 @@ class FrankDux(object):
             name = func.func_name
             # pull out the arg types & match to the names
             # import ipdb; ipdb.set_trace()
-            f = Function(args=args, return_type=returns)
+            f = Function(name=name, args=args, return_type=returns)
             self.registry[name] = f
             print "Created func:", func, args, kwargs
             return func

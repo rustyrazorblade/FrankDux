@@ -37,5 +37,5 @@ def test_basic_registration(app):
 
     f = app["is_greater_than_five"]
 
-    assert app.call("is_greater_than_five", i=10)
+    assert f(i=10)
 
