@@ -1,1 +1,14 @@
 pyzmq==15.1.0
+appnope==0.1.0
+decorator==4.0.6
+gnureadline==6.3.3
+path.py==8.1.2
+pexpect==4.0.1
+pickleshare==0.5
+ptyprocess==0.5
+py==1.4.31
+pycapnp==0.5.7
+pytest==2.8.5
+simplegeneric==0.8.1
+traitlets==4.0.0
+wsgiref==0.1.2
