@@ -8,7 +8,7 @@ class FrankDux(object):
     def __init__(self):
         self.reg = {}
 
-    def register(self, **args):
+    def register(self, *args, **kwargs):
         """
         Usage:
 
@@ -21,7 +21,14 @@ class FrankDux(object):
         :param args:
         :return:
         """
-        pass
+        print self
+        print args
+        print kwargs
 
-    def returns(self, t):
-        pass
+        # i
+        def new_func(*args, **kwargs):
+            return None
+
+        return new_func
+
+

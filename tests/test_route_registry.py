@@ -16,11 +16,10 @@ def app():
     def test_args(name, age):
         pass
 
-    @frank.register(int)
-    @frank.returns(bool)
+    @frank.register(int, returns=bool)
     def is_greater_than_five(i):
         return i > 5
-    
+
     return frank
 
 def test_basic_registration(app):
