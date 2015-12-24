@@ -27,6 +27,10 @@ def app():
 
     return frank
 
+@fixture
+def typemap():
+    return {"i":int}
+
 def test_basic_registration_func_exists(app):
 
     # each of the calls should be available in the registry
@@ -71,4 +75,6 @@ def test_returned_from_register_is_callable():
     assert(test_func(i=1) == 1)
 
 
+def test_validate_args(typemap):
+    pass
 
