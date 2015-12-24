@@ -83,3 +83,6 @@ def test_validate_args(typemap):
     result = frank.validate_args(typemap, {})
     assert result["i"] is None
 
+    with raises(TypeError):
+        frank.validate_args(typemap, {"i":"happy birthday"})
+
