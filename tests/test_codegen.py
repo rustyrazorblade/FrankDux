@@ -5,7 +5,7 @@ from fixtures import app
 @fixture
 def codegen():
     frank = app()
-    return CodeGen(frank, "output")
+    return CodeGen(frank, "output", language="python")
 
 def test_route_generation(codegen):
     pass

@@ -19,7 +19,11 @@ class CodeGen(object):
 
     def __init__(self, frank_instance,
                  output_dir="output",
-                 cap_schema=None):
+                 cap_schema=None,
+                 language=None):
+
+        if language is None:
+            raise TypeError("Language is required")
 
         self.output_dir = output_dir
         self.create_output_directory()
