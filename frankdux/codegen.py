@@ -1,6 +1,11 @@
 import os
 from capnp import load
 
+class PluginNotFoundException(Exception): pass
+
+PYTHON="python"
+
+
 class CodeGen(object):
     """
     class responsible for generating a few files:
@@ -8,9 +13,9 @@ class CodeGen(object):
     1. new capn proto schema which is a merge of the
        existing schema and the new RPC calls
 
-    2. uses capn proto
+    2. uses capn proto to generate data structures
 
-    3. client RPC library
+    3. generate client RPC library
 
     See how to use the loader: https://github.com/jparyani/pycapnp/blob/2516e3e4f1fcc6be1060310daf43100c28faa21f/capnp/lib/capnp.pyx#L3098
     """
@@ -26,7 +31,7 @@ class CodeGen(object):
             raise TypeError("Language is required")
 
         self.output_dir = output_dir
-        self.create_output_directory()
+        # load the python plugin
 
 
     def write(self, fp):
@@ -35,9 +40,15 @@ class CodeGen(object):
         :param fp:
         :return:
         """
+        self.check_plugin_exists()
+        self.create_client_library()
+        self.create_output_directory()
+        self.copy_schema_to_output()
+
+    def check_plugin_exists(self):
         pass
 
-    def generate_rpc_schema(self, typemap):
+    def generate_rpc_struct(self, typemap):
         """
 
         :param typemap: dict of key/type pairs
@@ -55,6 +66,13 @@ class CodeGen(object):
 
 
     def copy_schema(self):
+        pass
+
+    def create_client_library(self):
+        # raise exception if we can't find the plugin
+        pass
+
+    def copy_schema_to_output(self):
         pass
 
 
