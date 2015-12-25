@@ -8,10 +8,10 @@ setup(
         license='License :: OSI Approved :: BSD License',
         author='Jon Haddad',
         author_email='jon@jonhaddad.com',
-        description='Framework for ZeroMQ + CapnProto',
+        description='Framework for ZeroMQ and CapnProto',
         entry_points={
             'console_scripts': [
-                'frankdux=frankdux.__main__:main'
+                'frankdux=frankdux.cli:main'
             ]
         },
 
