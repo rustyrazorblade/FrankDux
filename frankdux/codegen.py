@@ -1,3 +1,4 @@
+import os
 from capnp import load
 
 class CodeGen(object):
@@ -14,9 +15,15 @@ class CodeGen(object):
     See how to use the loader: https://github.com/jparyani/pycapnp/blob/2516e3e4f1fcc6be1060310daf43100c28faa21f/capnp/lib/capnp.pyx#L3098
     """
     schema = None
-    def __init__(self, frank_instance, cap_schema):
-        #schema = load(cap_schema)
-        pass
+    output_dir = None
+
+    def __init__(self, frank_instance,
+                 output_dir="output",
+                 cap_schema=None):
+
+        self.output_dir = output_dir
+        self.create_output_directory()
+
 
     def write(self, fp):
         """
@@ -35,4 +42,15 @@ class CodeGen(object):
         # u.schema.node.displayName.split(":")[1]
         result = "struct {}"
         pass
+
+    def create_output_directory(self):
+        try:
+            os.makedirs(self.output_dir)
+        except OSError:
+            print "Directory already exists"
+
+
+    def copy_schema(self):
+        pass
+
 
