@@ -2,7 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 
 
 def main(frank, output_dir):
-    print "Executing main()", frank
+    print "Executing python codegen: main()", frank
     # load up the jinja template
     # env = Environment(loader=FileSystemLoader(""))
     env = Environment(loader=FileSystemLoader(__path__))
