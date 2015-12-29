@@ -1,6 +1,9 @@
 from collections import namedtuple, OrderedDict
 from functools import wraps
 import logging
+
+from frankdux.codegen import CodeGen
+
 from encoding import MessageEncoder
 from gevent import spawn
 import zmq.green as zmq
@@ -115,7 +118,16 @@ class FrankDux(object):
         socket.connect("tcp://127.0.0.1:{}".format(port))
         print "Socket available"
 
+        while True:
+            print "Receiving"
+            data = socket.recv()
+            print "got data: ", data
+            socket.send("you are my friend")
 
+
+    def generate_client_libraries(self, output_dir, language):
+        code = CodeGen(self, output_dir, language=language)
+        code.write()
 
 
     def decode_request(self, data):
