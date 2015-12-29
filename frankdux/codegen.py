@@ -76,7 +76,7 @@ class CodeGen(object):
     def create_client_library(self):
         # raise exception if we can't find the plugin
         path = ".plugins.{}".format(self.language)
-        import_module(path, "frankdux").main(self.frank)  # executes main() from imported lib
+        import_module(path, "frankdux").main(self.frank, self.output_dir)  # executes main() from imported lib
 
 
     def copy_schema_to_output(self):
