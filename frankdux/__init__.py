@@ -1,4 +1,4 @@
-from collections import namedtuple
+from collections import namedtuple, OrderedDict
 from functools import wraps
 import logging
 from encoding import MessageEncoder
@@ -54,7 +54,7 @@ class FrankDux(object):
             name = func.func_name
             # pull out the arg types & match to the names
 
-            zipped = dict(zip(func.func_code.co_varnames, args))
+            zipped = OrderedDict(zip(func.func_code.co_varnames, args))
 
             @wraps(func)
             def new_rpc(*new_args, **new_kwargs):
@@ -64,7 +64,7 @@ class FrankDux(object):
 
                 arguments = self.validate_args(zipped, new_kwargs)
                 result = func(**arguments)
-                # type check return type
+                # TODO type check return type
                 return result
 
             f = Function(name=name, types=zipped,
@@ -112,4 +112,4 @@ class FrankDux(object):
 
     def decode_request(self, data):
         pass
-    
+
