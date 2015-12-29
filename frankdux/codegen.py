@@ -45,13 +45,10 @@ class CodeGen(object):
         :param fp:
         :return:
         """
-        self.check_plugin_exists()
         self.create_output_directory()
         self.create_client_library()
         self.copy_schema_to_output()
 
-    def check_plugin_exists(self):
-        pass
 
     def generate_rpc_struct(self, typemap):
         """
