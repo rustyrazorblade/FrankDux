@@ -18,3 +18,6 @@ def test_exception_is_thrown_for_missing_plugin():
     with raises(PluginNotFoundException):
         c.check_plugin_exists()
 
+
+def test_generate_library(codegen):
+    codegen.write()

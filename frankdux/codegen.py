@@ -1,5 +1,6 @@
 import os
 from capnp import load
+from importlib import import_module
 
 class PluginNotFoundException(Exception): pass
 
@@ -21,6 +22,8 @@ class CodeGen(object):
     """
     schema = None
     output_dir = None
+    language = None
+    frank = None
 
     def __init__(self, frank_instance,
                  output_dir="output",
@@ -31,18 +34,20 @@ class CodeGen(object):
             raise TypeError("Language is required")
 
         self.output_dir = output_dir
+        self.language = language
+        self.frank = frank_instance
         # load the python plugin
 
 
-    def write(self, fp):
+    def write(self):
         """
         writes the full schema to the file handle
         :param fp:
         :return:
         """
         self.check_plugin_exists()
-        self.create_client_library()
         self.create_output_directory()
+        self.create_client_library()
         self.copy_schema_to_output()
 
     def check_plugin_exists(self):
@@ -70,7 +75,9 @@ class CodeGen(object):
 
     def create_client_library(self):
         # raise exception if we can't find the plugin
-        pass
+        path = ".plugins.{}".format(self.language)
+        import_module(path, "frankdux").main(self.frank)  # executes main() from imported lib
+
 
     def copy_schema_to_output(self):
         pass
