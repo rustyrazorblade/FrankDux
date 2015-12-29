@@ -2,6 +2,9 @@ from collections import namedtuple, OrderedDict
 from functools import wraps
 import logging
 from encoding import MessageEncoder
+from gevent import spawn
+import zmq.green as zmq
+
 
 class Function(object):
     name = None
@@ -104,10 +107,15 @@ class FrankDux(object):
 
         return result
 
-    def run(self, port):
+    def run(self, port=5000):
         # You have made it to the Kumite!
         # Run FrankDux on some port
-        pass
+        context = zmq.Context()
+        socket = context.socket(zmq.REP)
+        socket.connect("tcp://127.0.0.1:{}".format(port))
+        print "Socket available"
+
+
 
 
     def decode_request(self, data):
