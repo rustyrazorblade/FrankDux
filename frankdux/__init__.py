@@ -3,7 +3,9 @@ from collections import OrderedDict
 from functools import wraps
 
 
-from gevent import spawn
+from gevent import spawn, monkey
+monkey.patch_all()
+
 import zmq.green as zmq
 
 #
@@ -83,7 +85,7 @@ class FrankDux(object):
                          return_type=returns, func=new_rpc)
 
             self.registry[name] = f
-            print "Created func:", func, args, kwargs
+            logging.debug("Created func: %s %s %s", func, args, kwargs)
 
 
             return new_rpc
@@ -126,8 +128,8 @@ class FrankDux(object):
         self.context = zmq.Context()
         frontend = self.context.socket(zmq.ROUTER)
         frontend.bind("tcp://*:5559")
-        spawn(self.router, frontend)
-        return
+        logging.info("Spawning router")
+        spawn(lambda: self.router(frontend))
 
         # socket = self.context.socket(zmq.REP)
         # socket.bind("tcp://127.0.0.1:{}".format(port))

@@ -2,7 +2,7 @@ from frankdux import FrankDux
 import logging
 
 # output everything
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 
 frank = FrankDux()
