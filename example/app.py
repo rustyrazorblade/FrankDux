@@ -7,7 +7,7 @@ frank = FrankDux()
 
 @frank.register(int, int, returns=int)
 def add(first_var, second_var):
-    return a + b
+    return first_var + second_var
 
 @frank.register(int, int, returns=int)
 def subtract(a, b):
