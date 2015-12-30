@@ -131,9 +131,14 @@ class FrankDux(object):
         logging.info("Creating dealer for workers")
         workers = self.context.socket(zmq.DEALER)
         workers.bind("inproc://workers")
-        zmq.device(zmq.QUEUE, incoming, workers)
 
         # spawn workers
+        for i in range(20):
+            spawn(self.worker, i)
+
+
+        zmq.device(zmq.QUEUE, incoming, workers)
+
 
         logging.info("Finishing up")
 
@@ -147,6 +152,8 @@ class FrankDux(object):
         #     print "got data: ", data
         #     socket.send("you are my friend")
 
+    def worker(self, i):
+        logging.info("Starting worker %d", i)
 
 
     def generate_client_libraries(self, output_dir, language):
