@@ -121,6 +121,7 @@ class FrankDux(object):
     def run(self, port=5000):
         # You have made it to the Kumite!
         # Run FrankDux on some port
+        # probably need to use ZeroMQ Router/Dealer w/ device
         context = zmq.Context()
         socket = context.socket(zmq.REP)
         socket.bind("tcp://127.0.0.1:{}".format(port))
