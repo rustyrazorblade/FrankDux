@@ -1,12 +1,15 @@
-from collections import namedtuple, OrderedDict
-from functools import wraps
 import logging
+from collections import OrderedDict
+from functools import wraps
 
-from frankdux.codegen import CodeGen
 
-from encoding import MessageEncoder
 from gevent import spawn
 import zmq.green as zmq
+
+#
+from .exceptions import ArgumentCountException
+from .encoding import MessageEncoder
+from frankdux.codegen import CodeGen
 
 
 class Function(object):
@@ -57,6 +60,10 @@ class FrankDux(object):
             # register the function here
 
             returns = kwargs.get("returns", None)
+            # make sure param counts match
+            if len(func.func_code.co_varnames) != len(args):
+                raise ArgumentCountException()
+
             name = func.func_name
             # pull out the arg types & match to the names
 
@@ -100,6 +107,9 @@ class FrankDux(object):
         :param kwargs: dict of key:value
         :return: key:value, type checked
         """
+        # if len(typemap) != len(kwargs):
+        #     raise ArgumentCountException()
+
         result = {}
         for k, v in typemap.iteritems():
             tmp = kwargs.get(k, None)
