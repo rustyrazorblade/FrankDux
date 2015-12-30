@@ -62,3 +62,11 @@ def test_validate_args(typemap):
     with raises(TypeError):
         frank.validate_args(typemap, {"i": "happy birthday"})
 
+
+def test_type_count_and_arg_count_match():
+    frank = FrankDux()
+
+    with raises(Exception):
+        @frank.register(int, int)
+        def nothing(i):
+            pass
