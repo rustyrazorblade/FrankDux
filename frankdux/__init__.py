@@ -125,7 +125,7 @@ class FrankDux(object):
         # Run FrankDux on some port
         context = zmq.Context()
         socket = context.socket(zmq.REP)
-        socket.connect("tcp://127.0.0.1:{}".format(port))
+        socket.bind("tcp://127.0.0.1:{}".format(port))
         print "Socket available"
 
         while True:
