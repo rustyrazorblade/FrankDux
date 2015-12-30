@@ -6,7 +6,7 @@ frank = FrankDux()
 # frankdux app:frank
 
 @frank.register(int, int, returns=int)
-def add(a, b):
+def add(first_var, second_var):
     return a + b
 
 @frank.register(int, int, returns=int)

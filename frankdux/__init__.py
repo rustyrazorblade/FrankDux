@@ -14,7 +14,7 @@ from frankdux.codegen import CodeGen
 
 class Function(object):
     name = None
-    types = None # dict of key=type pairs
+    types = None # OrderedDict of key=type pairs, str:type
     return_type = None
     func = None
 
@@ -33,7 +33,7 @@ class FrankDux(object):
     registry = None
 
     def __init__(self):
-        self.registry = {}
+        self.registry = {}  # str: Function
 
     def register(self, *args, **kwargs):
         """
@@ -54,8 +54,6 @@ class FrankDux(object):
         """
         logging.debug("Registering function with args:")
 
-        # i
-        # import ipdb; ipdb.set_trace()
         def new_func(func):
             # register the function here
 

@@ -18,10 +18,9 @@ class Client(object):
             address = "tcp://{}:{}".format(self.host, self.port)
             self.socket.connect(address)
 
-
-
     # Client functions, auto generated
     {% for name, f in frank.registry.iteritems() %}
-    def {{ name }}(self):
+    def {{ name }}(self{% for arg_name, arg_type in f.types.iteritems() -%}
+        , {{arg_name}} {%- endfor %}):
         pass
     {% endfor %}
