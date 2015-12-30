@@ -1,4 +1,9 @@
 from frankdux import FrankDux
+import logging
+
+# output everything
+logging.basicConfig(level=logging.DEBUG)
+
 
 frank = FrankDux()
 

@@ -31,6 +31,7 @@ class Function(object):
 
 class FrankDux(object):
     registry = None
+    context = None
 
     def __init__(self):
         self.registry = {}  # str: Function
@@ -122,16 +123,26 @@ class FrankDux(object):
         # You have made it to the Kumite!
         # Run FrankDux on some port
         # probably need to use ZeroMQ Router/Dealer w/ device
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        socket.bind("tcp://127.0.0.1:{}".format(port))
-        print "Socket available"
+        self.context = zmq.Context()
+        frontend = self.context.socket(zmq.ROUTER)
+        frontend.bind("tcp://*:5559")
+        spawn(self.router, frontend)
+        return
 
-        while True:
-            print "Receiving"
-            data = socket.recv()
-            print "got data: ", data
-            socket.send("you are my friend")
+        # socket = self.context.socket(zmq.REP)
+        # socket.bind("tcp://127.0.0.1:{}".format(port))
+        # print "Socket available"
+        #
+        # while True:
+        #     print "Receiving"
+        #     data = socket.recv()
+        #     print "got data: ", data
+        #     socket.send("you are my friend")
+
+    def router(self, frontend):
+        # ZeroMQ router
+        logging.info("Starting router")
+        # router =
 
 
     def generate_client_libraries(self, output_dir, language):
