@@ -2,13 +2,10 @@ import logging
 from collections import OrderedDict
 from functools import wraps
 
-
-from gevent import spawn, monkey
-monkey.patch_all()
+from gevent import spawn
 
 import zmq.green as zmq
 
-#
 from .exceptions import ArgumentCountException
 from .encoding import MessageEncoder
 from frankdux.codegen import CodeGen
@@ -126,10 +123,19 @@ class FrankDux(object):
         # Run FrankDux on some port
         # probably need to use ZeroMQ Router/Dealer w/ device
         self.context = zmq.Context()
-        frontend = self.context.socket(zmq.ROUTER)
-        frontend.bind("tcp://*:5559")
-        logging.info("Spawning router")
-        spawn(lambda: self.router(frontend))
+
+        # incoming requests
+        incoming = self.context.socket(zmq.ROUTER)
+        incoming.bind("tcp://*:{}".format(port))
+
+        logging.info("Creating dealer for workers")
+        workers = self.context.socket(zmq.DEALER)
+        workers.bind("inproc://workers")
+        zmq.device(zmq.QUEUE, incoming, workers)
+
+        # spawn workers
+
+        logging.info("Finishing up")
 
         # socket = self.context.socket(zmq.REP)
         # socket.bind("tcp://127.0.0.1:{}".format(port))
@@ -141,10 +147,6 @@ class FrankDux(object):
         #     print "got data: ", data
         #     socket.send("you are my friend")
 
-    def router(self, frontend):
-        # ZeroMQ router
-        logging.info("Starting router")
-        # router =
 
 
     def generate_client_libraries(self, output_dir, language):
