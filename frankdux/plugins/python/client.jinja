@@ -21,7 +21,7 @@ class Client(object):
 
 
     # Client functions, auto generated
-    {% for f in frank.registry %}
-    def name(self):
+    {% for name, f in frank.registry.iteritems() %}
+    def {{ name }}(self):
         pass
     {% endfor %}
