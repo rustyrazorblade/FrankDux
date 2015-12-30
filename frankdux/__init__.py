@@ -154,6 +154,13 @@ class FrankDux(object):
 
     def worker(self, i):
         logging.info("Starting worker %d", i)
+        sock = self.context.socket(zmq.REP)
+        sock.connect("inproc://workers")
+        while True:
+            logging.info("Worker %s waiting for incoming message", i)
+            msg = sock.recv()
+            logging.info("Worker %s received message %s", i, msg)
+            sock.send("OK")
 
 
     def generate_client_libraries(self, output_dir, language):

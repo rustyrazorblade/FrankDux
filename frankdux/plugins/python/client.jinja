@@ -1,4 +1,4 @@
-import zmq.green as zmq
+import zmq
 
 class Client(object):
     host = None
@@ -12,15 +12,20 @@ class Client(object):
 
     def rpc(self, func, **kwargs):
         # ensure ZMQ is connected
-        if self.connection is None:
+        if self.context is None:
             self.context = zmq.Context()
-            self.socket = self.context.socket(zmq.REP)
+            self.socket = self.context.socket(zmq.REQ)
             address = "tcp://{}:{}".format(self.host, self.port)
             self.socket.connect(address)
+
+        self.socket.send("TEST")
+        reply = self.socket.recv()
+        //print reply
+
 
     # Client functions, auto generated
     {% for name, f in frank.registry.iteritems() %}
     def {{ name }}(self{% for arg_name, arg_type in f.types.iteritems() -%}
         , {{arg_name}} {%- endfor %}):
-        pass
+        self.rpc("whatever")
     {% endfor %}
