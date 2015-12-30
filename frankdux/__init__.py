@@ -139,18 +139,8 @@ class FrankDux(object):
 
         zmq.device(zmq.QUEUE, incoming, workers)
 
-
         logging.info("Finishing up")
 
-        # socket = self.context.socket(zmq.REP)
-        # socket.bind("tcp://127.0.0.1:{}".format(port))
-        # print "Socket available"
-        #
-        # while True:
-        #     print "Receiving"
-        #     data = socket.recv()
-        #     print "got data: ", data
-        #     socket.send("you are my friend")
 
     def worker(self, i):
         logging.info("Starting worker %d", i)
