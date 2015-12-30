@@ -6,11 +6,11 @@ frank = FrankDux()
 # frankdux app:frank
 
 @frank.register(int, int, returns=int)
-def add(self, a, b):
+def add(a, b):
     return a + b
 
 @frank.register(int, int, returns=int)
-def subtract(self, a, b):
+def subtract(a, b):
     return a - b
 
 if __name__ == "__main__":
