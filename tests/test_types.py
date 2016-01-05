@@ -28,5 +28,31 @@ def test_complex_objects():
         name = String()
         birthday = Birthday()
 
+    birthday = Birthday(month=7, day=11, year=1981)
+
+    u = User(name="Jon",
+             birthday=birthday)
+
+    assert u.birthday.month == 7
+    assert u.birthday.day == 11
+    assert u.birthday.year == 1981
+
     u = User(name="Jon",
              birthday=Birthday(month=7, day=11, year=1981))
+
+    assert u.birthday.month == 7
+    assert u.birthday.day == 11
+    assert u.birthday.year == 1981
+
+def test_list():
+    class Phone(Type):
+        name = String()
+        number = String()
+
+    class User(Type):
+        name = String()
+        numbers = List(Phone)
+
+
+    u = User(name="Jon", numbers=[Phone(name="home", number="111111111")])
+

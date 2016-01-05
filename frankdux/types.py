@@ -6,18 +6,40 @@ class Descriptor(object):
     def __set__(self, instance, value):
         pass
 
-
-
-class Int(Descriptor):
+class Primitive(Descriptor):
     pass
 
-class Float(Descriptor):
+
+# primitive types.  will get mapped directly to a language's primitives
+class Int(Primitive):
     pass
 
-class String(Descriptor):
+
+class Float(Primitive):
     pass
 
-class Bytes(Descriptor):
+
+class String(Primitive):
+    pass
+
+
+class Bytes(Primitive):
+    pass
+
+
+class Collection(Descriptor):
+    def __init__(self, collection_type):
+        pass
+
+class Map(Collection):
+    pass
+
+
+class List(Collection):
+    pass
+
+
+class Map(Collection):
     pass
 
 
