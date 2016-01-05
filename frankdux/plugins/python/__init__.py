@@ -11,6 +11,8 @@ def main(frank, output_dir):
 
     rendered_client = client.render(frank=frank)
 
+    # copy frankdux.types over
+    # the client is going to reuse all our metaclass stuff
     loc = "{}/client.py".format(output_dir)
     fp = open(loc, 'w')
     fp.write(rendered_client)
@@ -26,6 +28,7 @@ def main(frank, output_dir):
     fp.write(rendered_client)
     fp.write("\n")
     fp.close()
+
 
     # make sure we've got an empty __init__ so it's a real package
     loc = "{}/__init__.py".format(output_dir)
