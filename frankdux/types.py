@@ -1,5 +1,6 @@
 
 class Descriptor(object):
+
     def __get__(self, instance, owner):
         pass
 
@@ -31,6 +32,7 @@ class Collection(Descriptor):
     def __init__(self, collection_type):
         pass
 
+
 class Map(Collection):
     pass
 
@@ -38,30 +40,31 @@ class Map(Collection):
 class List(Collection):
     pass
 
+class TypeMetaClass(type):
+    def __new__(cls, name, bases, attrs):
+        # get a list of all the
+        fields = [(name, value) for (name, value) in attrs.items() if isinstance(value, Descriptor)]
+        attrs["_fields"] = set([x[0] for x in fields])
+        return super(TypeMetaClass, cls).__new__(cls, name, bases, attrs)
 
-class Map(Collection):
-    pass
 
-
-class BaseType(object):
+# Descriptor because we want to have nested types
+class BaseType(Descriptor):
+    _fields = None
     def __init__(self, **kwargs):
-        pass
+        # check if the fields all exist
+        fields = kwargs.keys()
+        if len(set(fields) - self._fields) > 0:
+            raise TypeError
+        
 
 
+# inherit from this
 class Type(BaseType):
-    _values = None
+    __metaclass__ = TypeMetaClass
 
-    def __metaclass__(name, bases, attrs):
-        bases = tuple([BaseType])
-        values = {}
 
-        for key, value in attrs.iteritems():
-            print key, value
 
-        body = {"_values": values }
-        # are we trying to create a class with something other than a descriptor?  BANNED
-
-        return type(name, bases, body)
 
 
 

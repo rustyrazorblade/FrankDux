@@ -11,8 +11,16 @@ def User():
     return User
 
 
-def test_user_creation(User):
+def test_user_creation():
+    class User(Type):
+        name = String()
+        age = Int()
+
     u = User(name="jon", age=34)
+
+    assert "name" in u._fields
+    assert "age" in u._fields
+
     assert u.name == "jon"
     assert u.age == 34
 
