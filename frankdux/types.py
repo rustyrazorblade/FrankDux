@@ -57,7 +57,7 @@ class TypeMetaClass(type):
 
 
 # Descriptor because we want to have nested types
-class BaseType(object):
+class BaseType(Descriptor):
     _fields = None
     _values = None
     def __init__(self, **kwargs):
