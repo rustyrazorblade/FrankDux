@@ -12,6 +12,7 @@ def User():
 
 def test_user_creation(User):
     u = User(name="jon", age=34)
+    print u
 
 
 

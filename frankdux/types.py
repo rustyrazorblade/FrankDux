@@ -18,13 +18,14 @@ class BaseType(object):
 class Type(BaseType):
     _values = None
 
-    def __init__(self, **kwargs):
+    def __init__(self, *kwargs):
         pass
 
-    def __metaclass__(name, *stuff):
+    def __metaclass__(name, bases, attrs):
         bases = tuple([BaseType])
         body = dict()
 
+        # import ipdb; ipdb.set_trace()
         return type(name, bases, body)
 
 
