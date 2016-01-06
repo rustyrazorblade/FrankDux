@@ -8,10 +8,15 @@ class Descriptor(object):
         return instance._values.get(self.name, None)
 
     def __set__(self, instance, value):
+        value = self._validate(value)
         instance._values[self.name] = value
 
     def _default(self):
         return None
+
+    def _validate(self, val):
+        return val
+
 
 class Primitive(Descriptor):
     pass
