@@ -53,6 +53,7 @@ class TypeMetaClass(type):
         attrs["_values"] = {}
         # ensure each of the metaclass instances knows it's field name
 
+
         return super(TypeMetaClass, cls).__new__(cls, name, bases, attrs)
 
 

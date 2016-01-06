@@ -69,4 +69,6 @@ def test_list():
 
     u = User(name="Jon", numbers=[Phone(name="home", number="111111111")])
 
+    assert len(u.numbers) == 1
+    assert u.numbers[0].name == "home"
 
