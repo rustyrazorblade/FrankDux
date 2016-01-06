@@ -15,6 +15,12 @@ class Descriptor(object):
         return None
 
     def _validate(self, val):
+        try:
+            # if we return a validation function, call it w/ the arg
+            return getattr(self, "_validation_func")(val)
+        except AttributeError: # could not find a validation function
+            pass
+
         return val
 
 
@@ -24,7 +30,7 @@ class Primitive(Descriptor):
 
 # primitive types.  will get mapped directly to a language's primitives
 class Int(Primitive):
-    pass
+    _validation_func = int
 
 
 class Float(Primitive):
@@ -85,14 +91,13 @@ class BaseType(Descriptor):
         if len(set(fields) - set(self._fields.keys())) > 0:
             raise TypeError
 
-        for field in self._fields:
+        for (name, field) in self._fields.iteritems():
             # get the value provided in kwargs or use the default
+            val = kwargs.get(name, self._fields[name]._default())
             # import ipdb; ipdb.set_trace()
-            val = kwargs.get(field, self._fields[field]._default())
-            self._values[field] = val
-
-        # for field, value in kwargs.iteritems():
-        #     self._values[field] = value
+            field.__set__(self,  val)
+            # self._values[name] = val
+            # self.__set__()
 
 
 

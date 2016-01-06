@@ -92,5 +92,5 @@ def ValidationFixture():
     return Validation
 
 def test_int_validation(ValidationFixture):
-    with raises(InternalTypeError):
+    with raises(ValueError):
         ValidationFixture(i="blah")
