@@ -1,3 +1,6 @@
+class ValidationError(Exception): pass
+class InternalTypeError(Exception): pass
+
 
 class Descriptor(object):
     name = None

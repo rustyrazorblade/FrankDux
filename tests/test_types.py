@@ -89,7 +89,8 @@ def ValidationFixture():
         f = Float()
         s = String()
         b = Bytes()
+    return Validation
 
 def test_int_validation(ValidationFixture):
-    with raises(TypeError):
+    with raises(InternalTypeError):
         ValidationFixture(i="blah")
