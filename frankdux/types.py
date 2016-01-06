@@ -34,15 +34,15 @@ class Int(Primitive):
 
 
 class Float(Primitive):
-    pass
+    _validation_func = float
 
 
 class String(Primitive):
-    pass
+    _validation_func = unicode
 
 
 class Bytes(Primitive):
-    pass
+    _validation_func = bytes
 
 
 class Collection(Descriptor):
@@ -91,15 +91,9 @@ class BaseType(Descriptor):
         if len(set(fields) - set(self._fields.keys())) > 0:
             raise TypeError
 
-        for (name, field) in self._fields.iteritems():
-            # get the value provided in kwargs or use the default
-            val = kwargs.get(name, self._fields[name]._default())
-            # import ipdb; ipdb.set_trace()
-            field.__set__(self,  val)
-            # self._values[name] = val
-            # self.__set__()
-
-
+        for (name, value) in kwargs.iteritems():
+            field = self._fields[name]
+            field.__set__(self, value)
 
 # inherit from this
 class Type(BaseType):

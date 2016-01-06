@@ -10,6 +10,12 @@ def User():
 
     return User
 
+@fixture
+def UserWithMap():
+    class User(Type):
+        name = String()
+        pies = Map(String, Int)
+    return User
 
 def test_user_creation():
     class User(Type):
@@ -73,14 +79,12 @@ def test_list():
     assert u.numbers[0].name == "home"
 
 
-def test_map():
-    class User(Type):
-        name = String()
-        pies = Map(String, Int)
-
-    u = User(name="jon")
+def test_map(UserWithMap):
+    u = UserWithMap(name="jon", pies={})
     u.pies["apple"] = 10
     u.pies["blueberry"] = 7
+
+
 
 @fixture
 def ValidationFixture():
