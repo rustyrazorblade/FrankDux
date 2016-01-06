@@ -11,10 +11,12 @@ def User():
     return User
 
 @fixture
-def UserWithMap():
+def UserWithCollections():
     class User(Type):
         name = String()
         pies = Map(String, Int)
+        nicknames = List(String)
+
     return User
 
 def test_user_creation():
@@ -79,12 +81,20 @@ def test_list():
     assert u.numbers[0].name == "home"
 
 
-def test_map(UserWithMap):
-    u = UserWithMap(name="jon", pies={})
+def test_map(UserWithCollections):
+    u = UserWithCollections(name="jon", pies={})
     u.pies["apple"] = 10
     u.pies["blueberry"] = 7
 
+def test_map_key_validation(UserWithCollections):
+    u = UserWithCollections(name="Jon", pies={})
+    with raises(TypeError):
+        u.pies[1] = 10
 
+def test_map_value_validation(UserWithCollections):
+    u = UserWithCollections(name="Jon", pies={})
+    with raises(TypeError):
+        u.pies["apple"] = 10.0
 
 @fixture
 def ValidationFixture():
