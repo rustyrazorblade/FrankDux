@@ -42,6 +42,11 @@ class String(Primitive):
 class Bytes(Primitive):
     _validation_func = bytes
 
+primitive_map = {
+    int: Int,
+    float: Float,
+    unicode: String
+}
 
 # all collections are tracking a value type
 class Collection(Descriptor):
@@ -52,13 +57,20 @@ class Collection(Descriptor):
 class TypedMap(dict):
     _key_type = None
     _value_type = None
+
     def set_key_type(self, key_type):
+        # if not isinstance(key_type, Primitive):
+        #     raise TypeError("Key must be a primitive")
+
         self._key_type = key_type
 
     def set_value_type(self, value_type):
         self._value_type = value_type
 
-
+    def __setitem__(self, key, value):
+        new_key = self._key_type._validate(key)
+        new_value = self._value_type._validate(value)
+        return super(TypedMap, self).__setitem__(new_key, new_value)
 
 class Map(Collection):
     _key_type = None

@@ -119,8 +119,8 @@ def test_typed_map():
     m.set_key_type(Int)
     m.set_value_type(Int)
 
-    with raises(TypeError):
+    with raises(ValueError):
         m["name"] = 2
 
-    with raises(TypeError):
+    with raises(ValueError):
         m[2] = "name"
