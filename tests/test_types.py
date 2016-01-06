@@ -87,9 +87,13 @@ def test_map(UserWithCollections):
     u.pies["blueberry"] = 7
 
 def test_map_key_validation(UserWithCollections):
+    with raises(TypeError):
+        u = UserWithCollections(name="Jon", pies={1:1})
+
     u = UserWithCollections(name="Jon", pies={})
     with raises(TypeError):
         u.pies[1] = 10
+
 
 def test_map_value_validation(UserWithCollections):
     u = UserWithCollections(name="Jon", pies={})
@@ -108,3 +112,15 @@ def ValidationFixture():
 def test_int_validation(ValidationFixture):
     with raises(ValueError):
         ValidationFixture(i="blah")
+
+
+def test_typed_map():
+    m = TypedMap()
+    m.set_key_type(Int)
+    m.set_value_type(Int)
+
+    with raises(TypeError):
+        m["name"] = 2
+
+    with raises(TypeError):
+        m[2] = "name"

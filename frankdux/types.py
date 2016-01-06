@@ -11,13 +11,11 @@ class Descriptor(object):
         value = self._validate(value)
         instance._values[self.name] = value
 
-    def _default(self):
-        return None
-
-    def _validate(self, val):
+    @classmethod
+    def _validate(cls, val):
         try:
             # if we return a validation function, call it w/ the arg
-            return getattr(self, "_validation_func")(val)
+            return getattr(cls, "_validation_func")(val)
         except AttributeError: # could not find a validation function
             pass
 
@@ -45,24 +43,46 @@ class Bytes(Primitive):
     _validation_func = bytes
 
 
+# all collections are tracking a value type
 class Collection(Descriptor):
-    def __init__(self, collection_type):
-        pass
+    _value_type = None
+
+
+# private, to be used internally only.  use Map() instead
+class TypedMap(dict):
+    _key_type = None
+    _value_type = None
+    def set_key_type(self, key_type):
+        self._key_type = key_type
+
+    def set_value_type(self, value_type):
+        self._value_type = value_type
+
 
 
 class Map(Collection):
     _key_type = None
-    _value_type = None
+
+
     def __init__(self, key_type, value_type):
         self._key_type = key_type
         self._value_type = value_type
 
-    def _default(self):
-        return {}
+    def _validate(self, val):
+
+        # is this a map with all valid k/v pairs
+        for k,v in val.iteritems():
+            if not isinstance(k, self._key_type) or not isinstance(val, self._value_type):
+                raise TypeError
+        m = TypedMap(val)
+        m.set_key_type(self._key_type)
+        m.set_value_type(self._value_type)
+        return m
+        # return self._value_type._validate(val)
 
 class List(Collection):
-    def _default(self):
-        return []
+    def __init__(self, collection_type):
+        pass
 
 class TypeMetaClass(type):
     def __new__(cls, name, bases, attrs):
