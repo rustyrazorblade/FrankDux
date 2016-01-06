@@ -28,7 +28,11 @@ class Primitive(Descriptor):
 
 # primitive types.  will get mapped directly to a language's primitives
 class Int(Primitive):
-    _validation_func = int
+    @classmethod
+    def _validation_func(cls, val):
+        if not isinstance(val, int):
+            raise ValueError
+        return val
 
 
 class Float(Primitive):
@@ -36,7 +40,11 @@ class Float(Primitive):
 
 
 class String(Primitive):
-    _validation_func = unicode
+    @classmethod
+    def _validation_func(cls, val):
+        if not isinstance(val, basestring):
+            raise ValueError
+        return val
 
 
 class Bytes(Primitive):
@@ -85,7 +93,7 @@ class Map(Collection):
         # is this a map with all valid k/v pairs
         for k,v in val.iteritems():
             if not isinstance(k, self._key_type) or not isinstance(val, self._value_type):
-                raise TypeError
+                raise ValueError
         m = TypedMap(val)
         m.set_key_type(self._key_type)
         m.set_value_type(self._value_type)

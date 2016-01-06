@@ -87,18 +87,18 @@ def test_map(UserWithCollections):
     u.pies["blueberry"] = 7
 
 def test_map_key_validation(UserWithCollections):
-    with raises(TypeError):
-        u = UserWithCollections(name="Jon", pies={1:1})
+    with raises(ValueError):
+        u = UserWithCollections(name="Jon", pies={1: 1})
 
     u = UserWithCollections(name="Jon", pies={})
-    with raises(TypeError):
+    with raises(ValueError):
         u.pies[1] = 10
 
 
 def test_map_value_validation(UserWithCollections):
     u = UserWithCollections(name="Jon", pies={})
-    with raises(TypeError):
-        u.pies["apple"] = 10.0
+    with raises(ValueError):
+        u.pies["apple"] = "tasty"
 
 @fixture
 def ValidationFixture():
