@@ -1,4 +1,4 @@
-from pytest import fixture
+from pytest import fixture, raises
 
 from frankdux.types import *
 
@@ -72,3 +72,24 @@ def test_list():
     assert len(u.numbers) == 1
     assert u.numbers[0].name == "home"
 
+
+def test_map():
+    class User(Type):
+        name = String()
+        pies = Map(String, Int)
+
+    u = User(name="jon")
+    u.pies["apple"] = 10
+    u.pies["blueberry"] = 7
+
+@fixture
+def ValidationFixture():
+    class Validation(Type):
+        i = Int()
+        f = Float()
+        s = String()
+        b = Bytes()
+
+def test_int_validation(ValidationFixture):
+    with raises(TypeError):
+        ValidationFixture(i="blah")

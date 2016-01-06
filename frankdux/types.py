@@ -34,7 +34,11 @@ class Collection(Descriptor):
 
 
 class Map(Collection):
-    pass
+    _key_type = None
+    _value_type = None
+    def __init__(self, key_type, value_type):
+        self._key_type = key_type
+        self._value_type = value_type
 
 
 class List(Collection):
