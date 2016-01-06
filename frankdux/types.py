@@ -2,10 +2,10 @@
 class Descriptor(object):
     name = None
     def __get__(self, instance, owner):
-        return instance._values[self.name]
+        return instance._values.get(self.name, None)
 
     def __set__(self, instance, value):
-        pass
+        instance._values[self.name] = value
 
 class Primitive(Descriptor):
     pass

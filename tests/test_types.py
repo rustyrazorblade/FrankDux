@@ -24,6 +24,10 @@ def test_user_creation():
     assert u.name == "jon"
     assert u.age == 34
 
+    u.name = "new jon"
+
+    assert u.name == "new jon"
+
 
 
 def test_complex_objects():
@@ -52,6 +56,7 @@ def test_complex_objects():
     assert u.birthday.day == 11
     assert u.birthday.year == 1981
 
+
 def test_list():
     class Phone(Type):
         name = String()
@@ -63,4 +68,5 @@ def test_list():
 
 
     u = User(name="Jon", numbers=[Phone(name="home", number="111111111")])
+
 
