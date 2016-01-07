@@ -6,6 +6,7 @@ from gevent import spawn
 
 import zmq.green as zmq
 
+from frankdux.types import Descriptor, Int, Float, String, Bytes
 from .exceptions import ArgumentCountException
 from .encoding import MessageEncoder
 from frankdux.codegen import CodeGen
@@ -53,6 +54,9 @@ class FrankDux(object):
         :return:
         """
         logging.debug("Registering function with args:")
+        # import ipdb; ipdb.set_trace()
+        # type upgrades
+        args = map(upgrade_type, args)
 
         def new_func(func):
             # register the function here
@@ -161,3 +165,17 @@ class FrankDux(object):
     def decode_request(self, data):
         pass
 
+
+
+def upgrade_type(t):
+    if issubclass(t, Descriptor):
+        return t
+    types = {
+        int: Int,
+        float: Float,
+        str: String,
+    }
+    try:
+        return types[t]
+    except:
+        raise

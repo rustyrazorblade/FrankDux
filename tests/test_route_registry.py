@@ -86,7 +86,9 @@ def test_ensure_python_types_are_upgraded():
         pass
 
     # check registry for whatever
-    assert isinstance(frank['whatever'].types['i'], Int), "Type upgrade didn't happen"
+    t = frank['whatever'].types['i']
+    assert t == Int
+
 
 
 

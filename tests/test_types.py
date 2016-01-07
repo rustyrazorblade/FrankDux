@@ -141,3 +141,5 @@ def test_typed_map():
 
     with raises(ValueError):
         m[2] = "name"
+
+
