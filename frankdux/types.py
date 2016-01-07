@@ -100,9 +100,19 @@ class Map(Collection):
         return m
         # return self._value_type._validate(val)
 
+# internal use only, use List
+class TypedList(list):
+    pass
+
 class List(Collection):
-    def __init__(self, collection_type):
-        pass
+    def __init__(self, value_type):
+        self._value_type = value_type
+
+    def _validate(cls, val):
+        for v in val:
+            if not isinstance(val, cls._value_type):
+                raise ValueError
+        return val
 
 class TypeMetaClass(type):
     def __new__(cls, name, bases, attrs):

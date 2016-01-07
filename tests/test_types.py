@@ -80,11 +80,25 @@ def test_list():
     assert len(u.numbers) == 1
     assert u.numbers[0].name == "home"
 
+def test_list_typing():
+    class Stuff(Type):
+        ids = List(Int)
+
+    s = Stuff(ids=[1])
+
+    s = Stuff(ids=[])
+    with raises(ValueError):
+        s.ids.append("name")
+
 
 def test_map(UserWithCollections):
+    # ensures our validation on creation works
+    UserWithCollections(name="jon", pies={"apple":10, "blueberry":7})
+
     u = UserWithCollections(name="jon", pies={})
     u.pies["apple"] = 10
     u.pies["blueberry"] = 7
+
 
 def test_map_key_validation(UserWithCollections):
     with raises(ValueError):
