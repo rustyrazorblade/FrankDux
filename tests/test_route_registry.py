@@ -1,7 +1,7 @@
 from frankdux import FrankDux
 from pytest import fixture, raises
 from fixtures import app
-
+from frankdux.types import *
 
 @fixture
 def typemap():
@@ -70,3 +70,23 @@ def test_type_count_and_arg_count_match():
         @frank.register(int, int)
         def nothing(i):
             pass
+
+def test_frank_dux_types_work():
+    frank = FrankDux()
+
+    @frank.register(Int, String)
+    def whatever(i, s):
+        pass
+
+def test_ensure_python_types_are_upgraded():
+    frank = FrankDux()
+
+    @frank.register(int)
+    def whatever(i):
+        pass
+
+    # check registry for whatever
+    assert isinstance(frank['whatever'].types['i'], Int), "Type upgrade didn't happen"
+
+
+

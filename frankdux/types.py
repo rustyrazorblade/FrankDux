@@ -157,6 +157,12 @@ class Type(BaseType):
 
 
 
+class Request(Type):
+    func = String()
+    body = Bytes() # will be decoded later
 
+class Response(Type):
+    body = Bytes()
+    metrics = Map(String, Float)
 
 
