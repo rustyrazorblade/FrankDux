@@ -85,6 +85,7 @@ def test_list_typing():
         ids = List(Int)
 
     s = Stuff(ids=[1])
+    s = Stuff(ids=[1,2])
 
     s = Stuff(ids=[])
     with raises(ValueError):

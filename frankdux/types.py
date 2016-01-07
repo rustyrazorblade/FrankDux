@@ -110,8 +110,7 @@ class List(Collection):
 
     def _validate(cls, val):
         for v in val:
-            if not isinstance(val, cls._value_type):
-                raise ValueError
+            val = cls._value_type._validate(v)
         return val
 
 class TypeMetaClass(type):
