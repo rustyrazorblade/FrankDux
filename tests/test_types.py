@@ -86,6 +86,8 @@ def test_list_typing():
 
     s = Stuff(ids=[1])
     s = Stuff(ids=[1,2])
+    with raises(ValueError):
+        s.ids = ["should error"]
 
     s = Stuff(ids=[])
     with raises(ValueError):

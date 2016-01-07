@@ -102,16 +102,28 @@ class Map(Collection):
 
 # internal use only, use List
 class TypedList(list):
-    pass
+    _value_type = None
+    def __init__(self, value_type, iterable):
+        self._value_type = value_type
+        super(TypedList, self).__init__(iterable)
+
+    def append(self, value):
+        # import ipdb; ipdb.set_trace()
+        value = self._value_type._validate(value)
+        return super(List, self).append(value)
 
 class List(Collection):
     def __init__(self, value_type):
         self._value_type = value_type
 
-    def _validate(cls, val):
+    def _validate(self, val):
+        # upgrade to a TypedList if it's a regular list
+        if type(val) is list:
+            val = TypedList(self._value_type, val)
         for v in val:
-            val = cls._value_type._validate(v)
+            val = self._value_type._validate(v)
         return val
+
 
 class TypeMetaClass(type):
     def __new__(cls, name, bases, attrs):
