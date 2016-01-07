@@ -115,7 +115,7 @@ class FrankDux(object):
         result = {}
         for k, v in typemap.iteritems():
             tmp = kwargs.get(k, None)
-            if tmp is None or isinstance(tmp, v):
+            if tmp is None or v._validate(tmp):
                 result[k] = tmp
             else:
                 raise TypeError

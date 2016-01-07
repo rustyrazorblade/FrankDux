@@ -5,7 +5,7 @@ from frankdux.types import *
 
 @fixture
 def typemap():
-    return {"i":int}
+    return {"i":Int}
 
 
 def test_basic_registration_func_exists(app):
@@ -24,7 +24,7 @@ def test_func_args_are_set_properly(app):
     f = app["is_greater_than_five"]
     # does the registry have the proper args set up?
     assert "i" in f.types
-    assert f.types["i"] == int
+    assert f.types["i"] == Int
 
 
 def test_funcs_can_be_called(app):
