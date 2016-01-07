@@ -50,11 +50,6 @@ class String(Primitive):
 class Bytes(Primitive):
     _validation_func = bytes
 
-primitive_map = {
-    int: Int,
-    float: Float,
-    unicode: String
-}
 
 # all collections are tracking a value type
 class Collection(Descriptor):
@@ -92,7 +87,7 @@ class Map(Collection):
 
         # is this a map with all valid k/v pairs
         for k,v in val.iteritems():
-            if not isinstance(k, self._key_type) or not isinstance(val, self._value_type):
+            if not self._key_type._validate(k) or not self._value_type._validate(v):
                 raise ValueError
         m = TypedMap(val)
         m.set_key_type(self._key_type)
@@ -121,7 +116,7 @@ class List(Collection):
         if type(val) is list:
             val = TypedList(self._value_type, val)
         for v in val:
-            val = self._value_type._validate(v)
+            self._value_type._validate(v)
         return val
 
 
