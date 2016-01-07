@@ -33,7 +33,7 @@ def test_funcs_can_be_called(app):
 
 
 def test_type_checking_is_enforced(app):
-    with raises(TypeError):
+    with raises(ValueError):
         app["is_greater_than_five"](i="bacon")
 
 
@@ -59,7 +59,7 @@ def test_validate_args(typemap):
     result = frank.validate_args(typemap, {})
     assert result["i"] is None
 
-    with raises(TypeError):
+    with raises(ValueError):
         frank.validate_args(typemap, {"i": "happy birthday"})
 
 
