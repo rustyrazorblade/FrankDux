@@ -1,8 +1,5 @@
 from frankdux import FrankDux
-import logging
-
-# output everything
-logging.basicConfig(level=logging.INFO)
+from frankdux.types import Type, Int, Float, String
 
 
 frank = FrankDux()
@@ -10,21 +7,13 @@ frank = FrankDux()
 # Generate the client library
 # frankdux app:frank python
 
-@frank.register(int, int, returns=int)
-def add(first_var, second_var):
-    return first_var + second_var
+class User(Type):
+    name = String()
+    age = Int()
 
-@frank.register(int, int, returns=int)
-def subtract(a, b):
-    return a - b
-
-@frank.register(str, str, returns=str)
-def concat_and_make_fun(a, b):
-    return a + b + " you suck"
-
-@frank.register([str])
-def concat_all(list_of_str):
-    pass
+@frank.register(String, Int, returns=User)
+def create_user(name, age):
+    return User(name=name, age=age)
 
 
 if __name__ == "__main__":
