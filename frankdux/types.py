@@ -34,6 +34,10 @@ class Int(Primitive):
             raise ValueError
         return val
 
+    def encode(self):
+        # return tuple of name/value
+        return ()
+
 
 class Float(Primitive):
     _validation_func = float
@@ -164,5 +168,15 @@ class Request(Type):
 class Response(Type):
     body = Bytes()
     metrics = Map(String, Float)
+
+
+class Encoder(object):
+    types = None
+
+    def __init__(self):
+        self.types = {}
+
+    def add_type(self, name, t):
+        self.types[name] = t
 
 
