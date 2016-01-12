@@ -4,3 +4,5 @@
 /FrankDux.egg-info/
 /output/
 /examples/*/output/
+.ipynb_checkpoints/
+*.ipynb
