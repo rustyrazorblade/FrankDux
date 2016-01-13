@@ -191,7 +191,9 @@ class TypeRegistry(object):
         def encoder(o):
             tmp = {"_type":o._name}
             for k,v in o._values.iteritems():
-                if isinstance(v, (Type, Collection)):
+                if isinstance(o, Type):
+                    tmp[k] = "I AM A CUSTOM TYPE"
+                if isinstance(v, Collection):
                     tmp[k] = "NOT SET YET"
                 else:
                     tmp[k] = v
