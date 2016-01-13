@@ -80,9 +80,9 @@ class TypedMap(dict):
         new_value = self._value_type._validate(value)
         return super(TypedMap, self).__setitem__(new_key, new_value)
 
+
 class Map(Collection):
     _key_type = None
-
 
     def __init__(self, key_type, value_type):
         self._key_type = key_type
@@ -100,6 +100,9 @@ class Map(Collection):
         return m
         # return self._value_type._validate(val)
 
+    def encode(self):
+        pass
+
 # internal use only, use List
 class TypedList(list):
     _value_type = None
@@ -111,6 +114,7 @@ class TypedList(list):
         # import ipdb; ipdb.set_trace()
         value = self._value_type._validate(value)
         return super(List, self).append(value)
+
 
 class List(Collection):
     def __init__(self, value_type):
@@ -162,12 +166,19 @@ class BaseType(Descriptor):
     def encode(self):
         result = {}
         for k,v in self._values.iteritems():
-            if isinstance(v, Descriptor):
-                result[k] = v.encode()
-            else:
+            ftype = self._fields[k]
+
+            if isinstance(ftype, Primitive):
                 result[k] = v
+            elif isinstance(ftype, (Collection, Type)):
+                result[k] = ftype.encode()
+            else:
+                raise NotImplementedError()
+
         return (self._name, result)
 
+    def encode_map(self, map):
+        return {}
 
 
 # inherit from this

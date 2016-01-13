@@ -57,6 +57,13 @@ def test_complex_to_dict():
     assert v["width"] == 8
     assert v["height"] == 4
 
+def test_collection_to_dict():
+    (t, d) = User(name="jon", age=34,
+                  addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
+    a = d["addresses"]
+    assert len(a) > 0
+    import ipdb; ipdb.set_trace()
+
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)
