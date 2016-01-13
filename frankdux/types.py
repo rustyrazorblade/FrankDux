@@ -148,6 +148,8 @@ class TypeMetaClass(type):
 class BaseType(Descriptor):
     _fields = None
     _values = None
+    _name = None
+    
     def __init__(self, **kwargs):
         # check if the fields all exist
         fields = kwargs.keys()
@@ -184,9 +186,8 @@ class TypeRegistry(object):
         self.types[name] = t
 
     def encode(self, obj):
-        # import ipdb; ipdb.set_trace()
         def encoder(o):
-            pass
+            import ipdb; ipdb.set_trace()
 
         result = msgpack.packb(obj, default=encoder)
         return result
