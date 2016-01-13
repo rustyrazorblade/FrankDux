@@ -182,8 +182,11 @@ class TypeRegistry(object):
         self.types = {}
 
     def add_type(self, t):
-        name = t.__name__
+        name = t._name
         self.types[name] = t
+        # register all subtypes
+        for subtype in filter(lambda x: isinstance(x, Type), t._fields.values()):
+            self.add_type(subtype)
 
     def encode(self, obj):
         # we're always going to get a dictionary from the encoder
