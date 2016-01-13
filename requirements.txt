@@ -1,7 +1,15 @@
-pyzmq==15.1.0
+-e git+git@github.com:rustyrazorblade/FrankDux.git@6cdd6f16c1d9be50399fb76083eaf97145e9c0f8#egg=FrankDux-master
+Jinja2==2.8
+MarkupSafe==0.23
 appnope==0.1.0
 decorator==4.0.6
+gevent==1.1rc2
 gnureadline==6.3.3
+greenlet==0.4.9
+ipdb==0.8.1
+ipython==4.0.1
+ipython-genutils==0.1.0
+msgpack-python==0.4.6
 path.py==8.1.2
 pexpect==4.0.1
 pickleshare==0.5
@@ -9,8 +17,7 @@ ptyprocess==0.5
 py==1.4.31
 pycapnp==0.5.7
 pytest==2.8.5
+pyzmq==15.1.0
 simplegeneric==0.8.1
 traitlets==4.0.0
 wsgiref==0.1.2
-gevent==1.1rc2
-jinja2

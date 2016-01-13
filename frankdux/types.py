@@ -1,3 +1,4 @@
+
 class ValidationError(Exception): pass
 class InternalTypeError(Exception): pass
 
@@ -181,6 +182,7 @@ class TypeRegistry(object):
         self.types[name] = t
 
     def encode(self, obj):
+        import ipdb; ipdb.set_trace()
         pass
 
     def decode(self, obj):
