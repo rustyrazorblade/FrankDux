@@ -189,8 +189,8 @@ class TypeRegistry(object):
         # we're always going to get a dictionary from the encoder
         # objects will be encoded in binary
         def encoder(o):
-            # tmp = {"_type":o._name}
-            tmp = {}
+            tmp = {"_type":o._name}
+            # tmp = {}
             for k,v in o._values.iteritems():
                 if isinstance(v, Type):
                     tmp[k] = self.encode(v)
@@ -198,7 +198,7 @@ class TypeRegistry(object):
                     tmp[k] = "NOT SET YET"
                 else:
                     tmp[k] = v
-            return (o._name, tmp)
+            return tmp
 
         result = msgpack.packb(obj, default=encoder)
         return result
@@ -206,15 +206,17 @@ class TypeRegistry(object):
     def decode(self, obj):
         def decoder(o):
             print "Decoding", o
-            (otype_str, kv) = o
-            print "Type & data:", otype_str, kv
+            otype_str = o["_type"]
+            del o["_type"]
+
+            print "Type & data:", otype_str, o
             otype = self.types[otype_str]
 
             # is this a complex type?
             if isinstance(otype, Type):
-                return self.decode(kv)
+                return self.decode(o)
             else:
-                return kv
+                return o
 
 
         return msgpack.unpackb(obj, object_hook=decoder)
