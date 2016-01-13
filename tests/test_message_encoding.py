@@ -44,6 +44,13 @@ def test_simple_to_dict():
     assert d["name"] == "jon"
     assert d["age"] == 34
 
+def test_complex_to_dict():
+    # type and dict
+    (t, d) = User(name="jon", age=34, rec=Rectangle(height=4, width=8)).encode()
+    assert t == "User"
+    assert d["name"] == "jon"
+    assert d["age"] == 34
+
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)
