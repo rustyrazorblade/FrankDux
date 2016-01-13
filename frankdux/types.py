@@ -27,7 +27,6 @@ class Descriptor(object):
 class Primitive(Descriptor):
     pass
 
-
 # primitive types.  will get mapped directly to a language's primitives
 class Int(Primitive):
     @classmethod
@@ -36,9 +35,6 @@ class Int(Primitive):
             raise ValueError
         return val
 
-    def encode(self):
-        # return tuple of name/value
-        return ()
 
 
 class Float(Primitive):
@@ -160,6 +156,11 @@ class BaseType(Descriptor):
             field = self._fields[name]
             field.__set__(self, value)
 
+    def to_dict(self):
+        pass
+
+
+
 # inherit from this
 class Type(BaseType):
     __metaclass__ = TypeMetaClass
@@ -189,38 +190,10 @@ class TypeRegistry(object):
             self.add_type(subtype)
 
     def encode(self, obj):
-        # we're always going to get a dictionary from the encoder
-        # objects will be encoded in binary
-        def encoder(o):
-            tmp = {"_type":o._name}
-            # tmp = {}
-            for k,v in o._values.iteritems():
-                if isinstance(v, Type):
-                    tmp[k] = self.encode(v)
-                if isinstance(v, Collection):
-                    tmp[k] = "NOT SET YET"
-                else:
-                    tmp[k] = v
-            return tmp
+        return msgpack.packb(obj.to_dict())
 
-        result = msgpack.packb(obj, default=encoder)
-        return result
-
-    def decode(self, obj):
-        def decoder(o):
-            print "Decoding", o
-            otype_str = o["_type"]
-            del o["_type"]
-
-            print "Type & data:", otype_str, o
-            otype = self.types[otype_str]
-
-            # is this a complex type?
-            if isinstance(otype, Type):
-                return self.decode(o)
-            else:
-                return o
-
-
-        return msgpack.unpackb(obj, object_hook=decoder)
+    def decode(self, data):
+        obj = msgpack.unpackb(data)
+        return obj
+        # return msgpack.unpackb(obj, object_hook=decoder)
 

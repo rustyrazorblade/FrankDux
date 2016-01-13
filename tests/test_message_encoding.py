@@ -35,6 +35,7 @@ def registry():
 def test_registry_has_correct_type_name(registry):
     assert "SimpleUser" in registry.types
     assert "User" in registry.types
+    assert "Rectangle" in registry.types
 
 
 def test_simple_encoding(registry):
@@ -53,7 +54,6 @@ def test_complex_encoding(registry):
     s = User(name="jon", age=34, rec=r)
     encoded = registry.encode(s)
     print "Complex:", encoded
-
     original = registry.decode(encoded)
 
     assert original.name == "jon"
