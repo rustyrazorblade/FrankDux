@@ -180,19 +180,19 @@ class BaseType(Descriptor):
             field = self._fields[name]
             field.__set__(self, value)
 
-    # def encode(self):
-    #     result = {}
-    #     for k,v in self._values.iteritems():
-    #         ftype = self._fields[k]
-    #
-    #         if isinstance(ftype, Primitive):
-    #             result[k] = v
-    #         elif isinstance(ftype, (Collection, Type)):
-    #             result[k] = ftype.encode()
-    #         else:
-    #             raise NotImplementedError()
-    #
-    #     return (self._name, result)
+    def encode(self):
+        result = {}
+        for k,v in self._values.iteritems():
+            ftype = self._fields[k]
+
+            if isinstance(ftype, Primitive):
+                result[k] = v
+            elif isinstance(ftype, (Collection, Type)):
+                result[k] = ftype.encode()
+            else:
+                raise NotImplementedError()
+
+        return (self._name, result)
 
 
 
