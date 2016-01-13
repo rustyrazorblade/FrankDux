@@ -23,6 +23,21 @@ class Descriptor(object):
 
         return val
 
+    def encode(self):
+        result = {}
+        for k,v in self._values.iteritems():
+            ftype = self._fields[k]
+
+            if isinstance(ftype, Primitive):
+                result[k] = v
+            elif isinstance(ftype, (Collection, Type)):
+                result[k] = ftype.encode()
+            else:
+                raise NotImplementedError()
+
+        return (self._name, result)
+
+
 
 class Primitive(Descriptor):
     pass
@@ -101,7 +116,9 @@ class Map(Collection):
         # return self._value_type._validate(val)
 
     def encode(self):
-        pass
+        result = {}
+        import ipdb; ipdb.set_trace()
+        return result
 
 # internal use only, use List
 class TypedList(list):
@@ -163,22 +180,20 @@ class BaseType(Descriptor):
             field = self._fields[name]
             field.__set__(self, value)
 
-    def encode(self):
-        result = {}
-        for k,v in self._values.iteritems():
-            ftype = self._fields[k]
+    # def encode(self):
+    #     result = {}
+    #     for k,v in self._values.iteritems():
+    #         ftype = self._fields[k]
+    #
+    #         if isinstance(ftype, Primitive):
+    #             result[k] = v
+    #         elif isinstance(ftype, (Collection, Type)):
+    #             result[k] = ftype.encode()
+    #         else:
+    #             raise NotImplementedError()
+    #
+    #     return (self._name, result)
 
-            if isinstance(ftype, Primitive):
-                result[k] = v
-            elif isinstance(ftype, (Collection, Type)):
-                result[k] = ftype.encode()
-            else:
-                raise NotImplementedError()
-
-        return (self._name, result)
-
-    def encode_map(self, map):
-        return {}
 
 
 # inherit from this
