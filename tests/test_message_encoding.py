@@ -35,6 +35,11 @@ def test_registry_has_correct_type_name(registry):
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)
-    registry.encode(s)
+    encoded = registry.encode(s)
+
+    original = registry.decode(encoded)
+
+    assert original.name == "jon"
+    assert original.name == 34
 
 

@@ -149,7 +149,7 @@ class BaseType(Descriptor):
     _fields = None
     _values = None
     _name = None
-    
+
     def __init__(self, **kwargs):
         # check if the fields all exist
         fields = kwargs.keys()
