@@ -6,7 +6,7 @@ from gevent import spawn
 
 import zmq.green as zmq
 
-from frankdux.types import Descriptor, Int, Float, String, Bytes
+from frankdux.types import Descriptor, Int, Float, String, Bytes, TypeRegistry
 from .exceptions import ArgumentCountException
 from .encoding import MessageEncoder
 from frankdux.codegen import CodeGen
@@ -30,11 +30,21 @@ class Function(object):
 
 
 class FrankDux(object):
+
+    # dict: [function_name] = Function()
     registry = None
+
+    # zeromq server context
     context = None
+
+    # TypeRegistry instance
+    type_registry = None
 
     def __init__(self):
         self.registry = {}  # str: Function
+        self.encoder = Encoder()
+        self.encoder.add_type(Int)
+        self.encoder.add_type(Float)
 
     def register(self, *args, **kwargs):
         """

@@ -170,13 +170,20 @@ class Response(Type):
     metrics = Map(String, Float)
 
 
-class Encoder(object):
+class TypeRegistry(object):
     types = None
 
     def __init__(self):
         self.types = {}
 
-    def add_type(self, name, t):
+    def add_type(self, t):
+        name = t.__name__
         self.types[name] = t
+
+    def encode(self, obj):
+        pass
+
+    def decode(self, obj):
+        pass
 
 
