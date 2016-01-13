@@ -42,6 +42,7 @@ class Descriptor(object):
 class Primitive(Descriptor):
     pass
 
+
 # primitive types.  will get mapped directly to a language's primitives
 class Int(Primitive):
     @classmethod
@@ -98,6 +99,7 @@ class TypedMap(dict):
 
 class Map(Collection):
     _key_type = None
+    _map = None
 
     def __init__(self, key_type, value_type):
         self._key_type = key_type
@@ -112,12 +114,15 @@ class Map(Collection):
         m = TypedMap(val)
         m.set_key_type(self._key_type)
         m.set_value_type(self._value_type)
+        self._map = m
         return m
         # return self._value_type._validate(val)
 
     def encode(self):
         result = {}
-        import ipdb; ipdb.set_trace()
+        for k,v in self._map.iteritems():
+            _, encoded = v.encode()
+            result[k] = encoded
         return result
 
 # internal use only, use List

@@ -22,7 +22,7 @@ class User(Type):
     age = Int()
     rec = Rectangle()
     addresses = Map(String, Address)
-
+    cats = Map(String, Int) # name to age
 
 @fixture
 def registry():
@@ -62,7 +62,7 @@ def test_collection_to_dict():
                   addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
     a = d["addresses"]
     assert len(a) > 0
-    import ipdb; ipdb.set_trace()
+    assert a["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
 
 
 def test_simple_encoding(registry):
