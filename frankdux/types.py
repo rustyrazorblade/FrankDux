@@ -45,6 +45,7 @@ class Primitive(Descriptor):
 
 # primitive types.  will get mapped directly to a language's primitives
 class Int(Primitive):
+    _name = "Int"
     @classmethod
     def _validation_func(cls, val):
         if not isinstance(val, int):
@@ -55,9 +56,11 @@ class Int(Primitive):
 
 class Float(Primitive):
     _validation_func = float
+    _name = "Float"
 
 
 class String(Primitive):
+    _name = "String"
     @classmethod
     def _validation_func(cls, val):
         if not isinstance(val, basestring):
@@ -66,6 +69,7 @@ class String(Primitive):
 
 
 class Bytes(Primitive):
+    _name = "Bytes"
     _validation_func = bytes
 
 
@@ -225,12 +229,13 @@ class TypeRegistry(object):
     def add_type(self, t):
         name = t._name
         self.types[name] = t
-        # register all subtypes
-        for subtype in filter(lambda x: isinstance(x, Type), t._fields.values()):
-            self.add_type(subtype)
+        # register all subtypes if it's a Type
+        if isinstance(t, Type):
+            for subtype in filter(lambda x: isinstance(x, Type), t._fields.values()):
+                self.add_type(subtype)
 
     def encode(self, obj):
-        return msgpack.packb(obj.to_dict())
+        return msgpack.packb(obj.encode())
 
     def decode(self, data):
         obj = msgpack.unpackb(data)
