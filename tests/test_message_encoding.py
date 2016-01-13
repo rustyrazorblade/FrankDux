@@ -45,7 +45,7 @@ def test_simple_encoding(registry):
     original = registry.decode(encoded)
 
     assert original.name == "jon"
-    assert original.name == 34
+    assert original.age == 34
 
 
 def test_complex_encoding(registry):
@@ -57,5 +57,5 @@ def test_complex_encoding(registry):
     original = registry.decode(encoded)
 
     assert original.name == "jon"
-    assert original.name == 34
+    assert original.age == 34
 

@@ -203,6 +203,12 @@ class TypeRegistry(object):
         return result
 
     def decode(self, obj):
-        pass
-
+        def decoder(o):
+            otype = self.types[o["_type"]]
+            del o["_type"]
+            # are any of the keys complex objects?
+            # if so, decode them
+            # take the resulting dict and turn it back into an object
+            return otype(**o)
+        return msgpack.unpackb(obj, object_hook=decoder)
 
