@@ -42,7 +42,7 @@ class FrankDux(object):
 
     def __init__(self):
         self.registry = {}  # str: Function
-        self.encoder = Encoder()
+        self.encoder = TypeRegistry()
         self.encoder.add_type(Int)
         self.encoder.add_type(Float)
 

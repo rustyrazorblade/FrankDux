@@ -52,7 +52,7 @@ def test_complex_encoding(registry):
     r = Rectangle(height=10, width=5)
     s = User(name="jon", age=34, rec=r)
     encoded = registry.encode(s)
-    print encoded
+    print "Complex:", encoded
 
     original = registry.decode(encoded)
 
