@@ -37,6 +37,13 @@ def test_registry_has_correct_type_name(registry):
     assert "User" in registry.types
     assert "Rectangle" in registry.types
 
+def test_simple_to_dict():
+    # type and dict
+    (t, d) = SimpleUser(name="jon", age=34).encode()
+    assert t == "SimpleUser"
+    assert d["name"] == "jon"
+    assert d["age"] == 34
+
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)

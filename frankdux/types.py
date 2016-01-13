@@ -57,6 +57,9 @@ class Bytes(Primitive):
 class Collection(Descriptor):
     _value_type = None
 
+    def encode(self):
+        raise NotImplementedError()
+
 
 # private, to be used internally only.  use Map() instead
 class TypedMap(dict):
@@ -156,8 +159,11 @@ class BaseType(Descriptor):
             field = self._fields[name]
             field.__set__(self, value)
 
-    def to_dict(self):
-        pass
+    def encode(self):
+        result = {}
+        for k,v in self._values.iteritems():
+            result[k] = v
+        return (self._name, result)
 
 
 
