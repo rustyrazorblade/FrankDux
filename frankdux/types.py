@@ -186,8 +186,11 @@ class TypeRegistry(object):
         self.types[name] = t
 
     def encode(self, obj):
+        # we're always going to get a dictionary from the encoder
+        # objects will be encoded in binary
         def encoder(o):
-            import ipdb; ipdb.set_trace()
+            tmp = {"_type":o._name}
+            return tmp
 
         result = msgpack.packb(obj, default=encoder)
         return result
