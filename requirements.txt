@@ -1,4 +1,3 @@
--e git+git@github.com:rustyrazorblade/FrankDux.git@6cdd6f16c1d9be50399fb76083eaf97145e9c0f8#egg=FrankDux-master
 Jinja2==2.8
 MarkupSafe==0.23
 appnope==0.1.0

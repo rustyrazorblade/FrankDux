@@ -1,4 +1,3 @@
-
 class ValidationError(Exception): pass
 class InternalTypeError(Exception): pass
 
