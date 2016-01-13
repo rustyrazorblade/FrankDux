@@ -1,3 +1,5 @@
+import msgpack
+
 class ValidationError(Exception): pass
 class InternalTypeError(Exception): pass
 
@@ -130,11 +132,12 @@ class TypeMetaClass(type):
         fields = {name:value for (name, value) in attrs.items() if isinstance(value, Descriptor)}
 
         # assign the field names
-        for name, instance in fields.iteritems():
-            instance.name = name
+        for n, instance in fields.iteritems():
+            instance.name = n
 
         attrs["_fields"] = fields  # k/v list of name:type
         attrs["_values"] = {}
+        attrs["_name"] = name
         # ensure each of the metaclass instances knows it's field name
 
 
@@ -181,8 +184,12 @@ class TypeRegistry(object):
         self.types[name] = t
 
     def encode(self, obj):
-        import ipdb; ipdb.set_trace()
-        pass
+        # import ipdb; ipdb.set_trace()
+        def encoder(o):
+            pass
+
+        result = msgpack.packb(obj, default=encoder)
+        return result
 
     def decode(self, obj):
         pass

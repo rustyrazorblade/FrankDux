@@ -6,15 +6,18 @@ class SimpleUser(Type):
     name = String()
     age = Int()
 
+
 class Address(Type):
     street = String()
     state = String()
     zip = String()
 
+
 class User(Type):
     name = String()
     age = String()
     addresses = Map(String, Address)
+
 
 @fixture
 def registry():
@@ -23,6 +26,11 @@ def registry():
     r.add_type(User)
 
     return r
+
+
+def test_registry_has_correct_type_name(registry):
+    assert "SimpleUser" in registry.types
+    assert "User" in registry.types
 
 
 def test_simple_encoding(registry):
