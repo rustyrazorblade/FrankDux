@@ -51,6 +51,8 @@ def test_complex_to_dict():
     assert d["name"] == "jon"
     assert d["age"] == 34
 
+    assert isinstance(d["rec"], tuple)
+
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)
