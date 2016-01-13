@@ -162,7 +162,10 @@ class BaseType(Descriptor):
     def encode(self):
         result = {}
         for k,v in self._values.iteritems():
-            result[k] = v
+            if isinstance(v, Descriptor):
+                result[k] = v.encode()
+            else:
+                result[k] = v
         return (self._name, result)
 
 
