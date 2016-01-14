@@ -239,7 +239,11 @@ class TypeRegistry(object):
                 self.add_type(subtype)
 
     def encode(self, obj):
-        return msgpack.packb(obj.encode())
+        # extract all the keys and stats about usage
+        encoded = obj.encode()
+        typemap = {}
+        typemap_and_data = (typemap, encoded)
+        return msgpack.packb(typemap_and_data)
 
     def decode(self, data):
         obj = msgpack.unpackb(data)
