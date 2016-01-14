@@ -204,9 +204,10 @@ class BaseType(Descriptor):
 
     def __init__(self, **kwargs):
         # check if the fields all exist
-        self._fields = {}
+        self._values = {}
         fields = kwargs.keys()
         if len(set(fields) - set(self._fields.keys())) > 0:
+            import ipdb; ipdb.set_trace()
             raise TypeError
 
         for (name, value) in kwargs.iteritems():
