@@ -209,7 +209,13 @@ class BaseType(Descriptor):
 
     @classmethod
     def decode(cls, obj):
-        pass
+        result = cls()
+        for (name, value) in obj.iteritems():
+            field = result._fields[name]
+            # import ipdb; ipdb.set_trace()
+            field.__set__(result, value)
+
+        return result
 
 
 

@@ -12,6 +12,7 @@ class Address(Type):
     state = String()
     zip = String()
 
+
 class Rectangle(Type):
     height = Int()
     width = Int()
@@ -23,6 +24,7 @@ class User(Type):
     rec = Rectangle()
     addresses = Map(String, Address)
     cats = Map(String, Int) # name to age
+
 
 @fixture
 def registry():
@@ -37,12 +39,14 @@ def test_registry_has_correct_type_name(registry):
     assert "User" in registry.types
     assert "Rectangle" in registry.types
 
+
 def test_simple_to_dict():
     # type and dict
     (t, d) = SimpleUser(name="jon", age=34).encode()
     assert t == "SimpleUser"
     assert d["name"] == "jon"
     assert d["age"] == 34
+
 
 def test_complex_to_dict():
     # type and dict
@@ -57,6 +61,7 @@ def test_complex_to_dict():
     assert v["width"] == 8
     assert v["height"] == 4
 
+
 def test_map_collection_to_dict():
     tmp = User(name="jon", age=34,
                   addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
@@ -66,9 +71,9 @@ def test_map_collection_to_dict():
     assert len(data) > 0
     assert data["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
 
+
 def test_list_collection_to_dict():
     assert NotImplementedError("Need to run this test")
-
 
 
 def test_simple_encoding(registry):
