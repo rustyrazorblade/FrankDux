@@ -100,6 +100,17 @@ class TypedMap(dict):
         new_value = self._value_type._validate(value)
         return super(TypedMap, self).__setitem__(new_key, new_value)
 
+    # maps will be encoded as a 2 item tuple as normal
+    # except the value will be a 3 item tuple, the key & value types, then the dict
+    # ("Map", (KeyType, ValueType, {k/v pairs})
+    def encode(self):
+        data = {}
+        for k,v in self.iteritems():
+            _, encoded = v.encode()
+            data[k] = encoded
+        types_and_data = (self._key_type._name, self._value_type._name, data)
+        return ("Map", types_and_data)
+
 
 class Map(Collection):
     _key_type = None
@@ -125,16 +136,7 @@ class Map(Collection):
         return m
         # return self._value_type._validate(val)
 
-    # maps will be encoded as a 2 item tuple as normal
-    # except the value will be a 3 item tuple, the key & value types, then the dict
-    # ("Map", (KeyType, ValueType, {k/v pairs})
-    def encode(self):
-        data = {}
-        for k,v in self._map.iteritems():
-            _, encoded = v.encode()
-            data[k] = encoded
-        types_and_data = (self._key_type._name, self._value_type._name, data)
-        return ("Map", types_and_data)
+
 
 
     def set_key_type(self, key_type):

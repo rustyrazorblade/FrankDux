@@ -73,13 +73,12 @@ def test_map_collection_to_dict():
 
 
 def test_list_collection_to_dict():
-    assert NotImplementedError("Need to run this test")
+    assert False
 
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)
     encoded = registry.encode(s)
-    print encoded
 
     original = registry.decode(encoded)
 
@@ -92,7 +91,6 @@ def test_complex_encoding(registry):
     s = User(name="jon", age=34, rec=r)
 
     encoded = registry.encode(s)
-    print "Complex:", encoded
     original = registry.decode(encoded)
 
     assert original.name == "jon"
