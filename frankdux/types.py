@@ -126,11 +126,12 @@ class Map(Collection):
     # except the value will be a 3 item tuple, the key & value types, then the dict
     # ("Map", (KeyType, ValueType, {k/v pairs})
     def encode(self):
-        result = {}
+        data = {}
         for k,v in self._map.iteritems():
             _, encoded = v.encode()
-            result[k] = encoded
-        return ("Map", result)
+            data[k] = encoded
+        types_and_data = (self._key_type._name, self._value_type._name, data)
+        return ("Map", types_and_data)
 
 # internal use only, use List
 class TypedList(list):
