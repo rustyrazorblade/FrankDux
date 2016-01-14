@@ -173,7 +173,6 @@ class TypeMetaClass(type):
         attrs["_name"] = name
         # ensure each of the metaclass instances knows it's field name
 
-
         return super(TypeMetaClass, cls).__new__(cls, name, bases, attrs)
 
 
@@ -244,9 +243,11 @@ class TypeRegistry(object):
         name = t._name
         self.types[name] = t
         # register all subtypes if it's a Type
-        if isinstance(t, Type):
+        if t.__class__ == TypeMetaClass: # we're looking at a class, whose type is TypeMetaClass
             for subtype in filter(lambda x: isinstance(x, Type), t._fields.values()):
                 self.add_type(subtype)
+        if isinstance(t, Collection):
+            import ipdb; ipdb.set_trace()
 
     def encode(self, obj):
         # extract all the keys and stats about usage
