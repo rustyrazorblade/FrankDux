@@ -222,7 +222,7 @@ class BaseType(Descriptor):
             if isinstance(ftype, Primitive):
                 result[k] = v
             elif isinstance(ftype, (Collection, Type)):
-                result[k] = ftype.encode()
+                result[k] = v.encode()
             else:
                 raise NotImplementedError()
 
