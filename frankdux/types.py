@@ -105,6 +105,9 @@ class Map(Collection):
     _key_type = None
     _map = None
 
+    _key_type = None
+    _value_type = None
+
     def __init__(self, key_type, value_type):
         self._key_type = key_type
         self._value_type = value_type
@@ -132,6 +135,23 @@ class Map(Collection):
             data[k] = encoded
         types_and_data = (self._key_type._name, self._value_type._name, data)
         return ("Map", types_and_data)
+
+
+    def set_key_type(self, key_type):
+        # if not isinstance(key_type, Primitive):
+        #     raise TypeError("Key must be a primitive")
+
+        self._key_type = key_type
+
+    def set_value_type(self, value_type):
+        self._value_type = value_type
+
+    def __setitem__(self, key, value):
+        new_key = self._key_type._validate(key)
+        new_value = self._value_type._validate(value)
+        return super(TypedMap, self).__setitem__(new_key, new_value)
+
+
 
 # internal use only, use List
 class TypedList(list):
@@ -169,7 +189,7 @@ class TypeMetaClass(type):
             instance.name = n
 
         attrs["_fields"] = fields  # k/v list of name:type
-        attrs["_values"] = {}
+        attrs["_values"] = None
         attrs["_name"] = name
         # ensure each of the metaclass instances knows it's field name
 
@@ -184,6 +204,7 @@ class BaseType(Descriptor):
 
     def __init__(self, **kwargs):
         # check if the fields all exist
+        self._fields = {}
         fields = kwargs.keys()
         if len(set(fields) - set(self._fields.keys())) > 0:
             raise TypeError

@@ -99,10 +99,13 @@ def test_complex_encoding(registry):
     assert original.age == 34
 
 
-def test_user_internal_map_share_bug():
+def test_user_internal_object_share_bug():
     tmp = User(name="jon", age=34,
                addresses={"home":Address(street="whatever", state="CA", zip="90254")})
 
     r = Rectangle(height=10, width=5)
     s = User(name="jon", age=34, rec=r)
     assert tmp.addresses != s.addresses
+
+    s2 = User(name="jon")
+    assert s2.age != 34
