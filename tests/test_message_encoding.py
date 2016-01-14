@@ -1,6 +1,6 @@
 from frankdux import TypeRegistry
 from pytest import fixture, raises
-from frankdux.types import Type, Int, String, Map, Float
+from frankdux.types import Type, Int, String, Map, Float, List
 
 class SimpleUser(Type):
     name = String()
@@ -24,6 +24,7 @@ class User(Type):
     rec = Rectangle()
     addresses = Map(String, Address)
     cats = Map(String, Int) # name to age
+    fav_nums = List(Int)
 
 
 @fixture
@@ -73,8 +74,10 @@ def test_map_collection_to_dict():
 
 
 def test_list_collection_to_dict():
-    assert False
+    u = User(name="steve", fav_nums=[1,2,3])
+    encoded = u.encode()
 
+    decoded = User.decode(encoded)
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)
@@ -96,6 +99,9 @@ def test_complex_encoding(registry):
     assert original.name == "jon"
     assert original.age == 34
 
+
+def test_primitive_in_map():
+    s = User(name="jon", age=34, cats={"Max": 10, "Mittens": 9}).encode()
 
 def test_user_internal_object_share_bug():
     tmp = User(name="jon", age=34,

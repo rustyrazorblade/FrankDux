@@ -42,7 +42,6 @@ class Descriptor(object):
 class Primitive(Descriptor):
     pass
 
-
 # primitive types.  will get mapped directly to a language's primitives
 class Int(Primitive):
     _name = "Int"
@@ -106,7 +105,8 @@ class TypedMap(dict):
     def encode(self):
         data = {}
         for k,v in self.iteritems():
-            _, encoded = v.encode()
+            # encoded = v.encode if isinstance(v, (TypeMetaClass, Collection)) else v
+            _, encoded = v.encode() if isinstance(v, (Type, Collection)) else (None, v)
             data[k] = encoded
         types_and_data = (self._key_type._name, self._value_type._name, data)
         return ("Map", types_and_data)
@@ -166,6 +166,17 @@ class TypedList(list):
         # import ipdb; ipdb.set_trace()
         value = self._value_type._validate(value)
         return super(List, self).append(value)
+
+    # lists will be encoded as a 2 item tuple as normal
+    # except the value will be a 2 item tuple, the value type, then the list
+    # ("List", (ValueType, [ListItems])
+    def encode(self):
+        data = []
+        for v in self:
+            encoded = v.encode if isinstance(v, (TypeMetaClass, Collection)) else v
+            data.append(encoded)
+        types_and_data = (self._value_type._name, data)
+        return ("List", types_and_data)
 
 
 class List(Collection):
