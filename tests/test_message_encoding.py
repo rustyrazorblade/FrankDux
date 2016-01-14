@@ -43,41 +43,37 @@ def test_registry_has_correct_type_name(registry):
 
 def test_simple_to_dict():
     # type and dict
-    (t, d) = SimpleUser(name="jon", age=34).encode()
-    assert t == "SimpleUser"
-    assert d["name"] == "jon"
-    assert d["age"] == 34
+    data = SimpleUser(name="jon", age=34).encode()
+    assert data["name"] == "jon"
+    assert data["age"] == 34
 
 
 def test_complex_to_dict():
     # type and dict
-    (t, d) = User(name="jon", age=34, rec=Rectangle(height=4, width=8)).encode()
-    assert t == "User"
-    assert d["name"] == "jon"
-    assert d["age"] == 34
+    data = User(name="jon", age=34, rec=Rectangle(height=4, width=8)).encode()
+    assert data["name"] == "jon"
+    assert data["age"] == 34
 
-    rec = d["rec"]
-    assert isinstance(rec, tuple)
-    (k, v) = rec
-    assert v["width"] == 8
-    assert v["height"] == 4
+    rec = data["rec"]
+    assert rec["width"] == 8
+    assert rec["height"] == 4
 
 
 def test_map_collection_to_dict():
-    tmp = User(name="jon", age=34,
+    encoded = User(name="jon", age=34,
                   addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
-    (t, d) = tmp
 
-    (t, (kt, vt, data)) = d["addresses"] # type, key_type, value_type
-    assert len(data) > 0
-    assert data["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
+    addresses = encoded["addresses"] # type, key_type, value_type
+    assert len(addresses) > 0
+    assert addresses["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
 
 
 def test_list_collection_to_dict():
     u = User(name="steve", fav_nums=[1,2,3])
     encoded = u.encode()
 
-    decoded = User.decode(encoded)
+    decoded = User.decode(encoded[1])
+    assert decoded.fav_nums == [1,2,3]
 
 def test_simple_encoding(registry):
     s = SimpleUser(name="jon", age=34)

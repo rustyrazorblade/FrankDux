@@ -108,8 +108,7 @@ class TypedMap(dict):
             # encoded = v.encode if isinstance(v, (TypeMetaClass, Collection)) else v
             _, encoded = v.encode() if isinstance(v, (Type, Collection)) else (None, v)
             data[k] = encoded
-        types_and_data = (self._key_type._name, self._value_type._name, data)
-        return ("Map", types_and_data)
+        return data
 
 
 class Map(Collection):
@@ -134,9 +133,6 @@ class Map(Collection):
         m.set_value_type(self._value_type)
         self._map = m
         return m
-        # return self._value_type._validate(val)
-
-
 
 
     def set_key_type(self, key_type):
@@ -175,8 +171,8 @@ class TypedList(list):
         for v in self:
             encoded = v.encode if isinstance(v, (TypeMetaClass, Collection)) else v
             data.append(encoded)
-        types_and_data = (self._value_type._name, data)
-        return ("List", types_and_data)
+
+        return data
 
 
 class List(Collection):
@@ -239,7 +235,7 @@ class BaseType(Descriptor):
             else:
                 raise NotImplementedError()
 
-        return (self._name, result)
+        return result
 
     @classmethod
     def decode(cls, obj):
@@ -286,13 +282,13 @@ class TypeRegistry(object):
 
     def encode(self, obj):
         # extract all the keys and stats about usage
-        encoded = obj.encode()
+        # objects are encoded as a
         typemap = {}
-        typemap_and_data = (typemap, encoded)
-        return msgpack.packb(typemap_and_data)
+        to_encode = (obj._name, typemap, obj.encode())
+        encoded = msgpack.packb(to_encode)
+        return encoded
 
     def decode(self, data):
-        (type_map, data) = msgpack.unpackb(data)
-        (t, d) = data # type, data
-        return self.types[t].decode(d)
+        (data_type, type_map, encoded) = msgpack.unpackb(data)
+        return self.types[data_type].decode(encoded)
 
