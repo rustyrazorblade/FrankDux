@@ -72,7 +72,7 @@ def test_list_collection_to_dict():
     u = User(name="steve", fav_nums=[1,2,3])
     encoded = u.encode()
 
-    decoded = User.decode(encoded[1])
+    decoded = User.decode(encoded)
     assert decoded.fav_nums == [1,2,3]
 
 def test_simple_encoding(registry):
