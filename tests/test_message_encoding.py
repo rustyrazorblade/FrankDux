@@ -62,10 +62,17 @@ def test_complex_to_dict():
 def test_map_collection_to_dict():
     encoded = User(name="jon", age=34,
                   addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
-
-    addresses = encoded["addresses"] # type, key_type, value_type
+    """
+    {'addresses': {'home': {'state': 'CA', 'street': 'whatever', 'zip': '90254'}},
+     'age': 34,
+     'name': 'jon'}
+    """
+    addresses = encoded["addresses"]
     assert len(addresses) > 0
     assert addresses["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
+
+    decoded = User.decode(encoded)
+    assert isinstance(decoded.addresses[0], Address)
 
 
 def test_list_collection_to_dict():

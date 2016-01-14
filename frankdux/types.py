@@ -106,7 +106,7 @@ class TypedMap(dict):
         data = {}
         for k,v in self.iteritems():
             # encoded = v.encode if isinstance(v, (TypeMetaClass, Collection)) else v
-            _, encoded = v.encode() if isinstance(v, (Type, Collection)) else (None, v)
+            encoded = v.encode() if isinstance(v, (Type, Collection)) else v
             data[k] = encoded
         return data
 
