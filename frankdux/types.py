@@ -207,6 +207,10 @@ class BaseType(Descriptor):
 
         return (self._name, result)
 
+    @classmethod
+    def decode(cls, obj):
+        pass
+
 
 
 # inherit from this
@@ -246,7 +250,7 @@ class TypeRegistry(object):
         return msgpack.packb(typemap_and_data)
 
     def decode(self, data):
-        obj = msgpack.unpackb(data)
-        return obj
-        # return msgpack.unpackb(obj, object_hook=decoder)
+        (type_map, data) = msgpack.unpackb(data)
+        (t, d) = data # type, data
+        return self.types[t].decode(d)
 
