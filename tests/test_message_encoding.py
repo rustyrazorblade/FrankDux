@@ -72,7 +72,7 @@ def test_map_collection_to_dict():
     assert addresses["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
 
     decoded = User.decode(encoded)
-    assert isinstance(decoded.addresses[0], Address)
+    assert isinstance(decoded.addresses["home"], Address)
 
 
 def test_list_collection_to_dict():

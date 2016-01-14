@@ -37,6 +37,9 @@ class Descriptor(object):
 
         return (self._name, result)
 
+    def decode(self, value):
+        return value
+
 
 
 class Primitive(Descriptor):
@@ -123,7 +126,11 @@ class Map(Collection):
         self._value_type = value_type
 
     def _validate(self, val):
+        """
 
+        :param val: dict
+        :return: TypedMap
+        """
         # is this a map with all valid k/v pairs
         for k,v in val.iteritems():
             if not self._key_type._validate(k) or not self._value_type._validate(v):
@@ -144,11 +151,14 @@ class Map(Collection):
     def set_value_type(self, value_type):
         self._value_type = value_type
 
-    def __setitem__(self, key, value):
-        new_key = self._key_type._validate(key)
-        new_value = self._value_type._validate(value)
-        return super(TypedMap, self).__setitem__(new_key, new_value)
+    def decode(self, data):
+        tm = TypedMap()
+        tm.set_key_type(self._key_type)
+        tm.set_value_type(self._value_type)
 
+        for key, val in data.iteritems():
+            tm[key] = self._value_type.decode(val)
+        return tm
 
 
 # internal use only, use List
@@ -216,7 +226,6 @@ class BaseType(Descriptor):
         self._values = {}
         fields = kwargs.keys()
         if len(set(fields) - set(self._fields.keys())) > 0:
-            import ipdb; ipdb.set_trace()
             raise TypeError
 
         for (name, value) in kwargs.iteritems():
@@ -243,7 +252,9 @@ class BaseType(Descriptor):
         for (name, value) in obj.iteritems():
             field = result._fields[name]
             # import ipdb; ipdb.set_trace()
-            field.__set__(result, value)
+            # if isinstance(field, Collection):
+            field.__set__(result, field.decode(value))
+            # field.__set__(result, value)
 
         return result
 
