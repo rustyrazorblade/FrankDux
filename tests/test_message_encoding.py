@@ -61,8 +61,10 @@ def test_collection_to_dict():
     (t, d) = User(name="jon", age=34,
                   addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
     a = d["addresses"]
+    import ipdb; ipdb.set_trace()
     assert len(a) > 0
     assert a["home"] == {'state': 'CA', 'street': 'whatever', 'zip': '90254'}
+    import ipdb; ipdb.set_trace()
 
 
 def test_simple_encoding(registry):
