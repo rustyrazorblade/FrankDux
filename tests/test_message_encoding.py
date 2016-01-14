@@ -58,8 +58,9 @@ def test_complex_to_dict():
     assert v["height"] == 4
 
 def test_collection_to_dict():
-    (t, d) = User(name="jon", age=34,
+    tmp = User(name="jon", age=34,
                   addresses={"home":Address(street="whatever", state="CA", zip="90254")}).encode()
+    (t, d) = tmp
 
     (t, (kt, vt, data)) = d["addresses"] # type, key_type, value_type
     assert len(data) > 0
