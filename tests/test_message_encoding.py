@@ -25,6 +25,7 @@ class User(Type):
     addresses = Map(String, Address)
     cats = Map(String, Int) # name to age
     fav_nums = List(Int)
+    la = List(Address)
 
 
 @fixture
@@ -46,6 +47,12 @@ def test_simple_to_dict():
     data = SimpleUser(name="jon", age=34).encode()
     assert data["name"] == "jon"
     assert data["age"] == 34
+
+
+def test_list_of_objects_works():
+    data = User(name="jon", la=[Address(zip="90254")]).encode()
+    user = User.decode(data)
+    assert isinstance(user.la[0], Address)
 
 
 def test_complex_to_dict():

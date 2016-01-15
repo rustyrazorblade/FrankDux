@@ -158,7 +158,7 @@ class Map(Collection):
 
         for key, val in data.iteritems():
             tm[key] = self._value_type.decode(val)
-            
+
         return tm
 
 
