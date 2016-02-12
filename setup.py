@@ -15,5 +15,8 @@ setup(
                 'frankdux=frankdux.cli:main'
             ]
         },
+        install_requires=[
+            "msgpack-python==0.4.6"
+        ]
 
 )
